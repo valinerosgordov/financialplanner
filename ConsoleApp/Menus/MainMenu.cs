@@ -33,12 +33,31 @@ namespace FinancialPlanner.ConsoleApp.Menus
             var expenses = transactions.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount);
             var balance = income - expenses;
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"  💰 Доходы: {income:N2} ₽");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"  💸 Расходы: {expenses:N2} ₽");
-            Console.ForegroundColor = balance >= 0 ? ConsoleColor.Green : ConsoleColor.Red;
-            Console.WriteLine($"  ⚖️  Баланс: {balance:N2} ₽");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("╔");
+            Console.Write(new string('═', 78));
+            Console.WriteLine("╗");
+            
+            Console.Write("║");
+            Console.Write(new string(' ', 20));
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("◆");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("  📊 STATS & FINANCIAL TRACKER 📊");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("  ◆");
+            Console.Write(new string(' ', 20));
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("║");
+            
+            Console.Write("╠");
+            Console.Write(new string('═', 78));
+            Console.WriteLine("╣");
+            
+            _renderer.ShowStatsBox("💰 Доходы", $"{income:N2} ₽", ConsoleColor.Green);
+            _renderer.ShowStatsBox("💸 Расходы", $"{expenses:N2} ₽", ConsoleColor.Red);
+            _renderer.ShowStatsBox("⚖️  Баланс", $"{balance:N2} ₽", balance >= 0 ? ConsoleColor.Green : ConsoleColor.Red);
+            
             Console.ResetColor();
 
             _renderer.Menu(new[]
@@ -401,18 +420,96 @@ namespace FinancialPlanner.ConsoleApp.Menus
             if (newLevel > oldLevel)
             {
                 _renderer.Clear();
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("╔");
+                Console.Write(new string('═', 78));
+                Console.WriteLine("╗");
+                
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.Write("║");
+                    Console.Write(new string(' ', 78));
+                    Console.WriteLine("║");
+                }
+                
+                Console.Write("║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("╔═══════════════════════════════════════════════════╗");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("║");
+                
+                Console.Write("║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("║");
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(@"
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║                    ⚡ LEVEL UP! ⚡                          ║
-║                                                              ║
-║              Уровень {0} → {1}                              ║
-║                                                              ║
-║              +{2} XP за {3}                                 ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
-", oldLevel, newLevel, xp, source);
+                Console.Write("        ⚡ LEVEL UP! ⚡");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("                    ║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("║");
+                
+                Console.Write("║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("╠═══════════════════════════════════════════════════╣");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("║");
+                
+                Console.Write("║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("║");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("  Уровень ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"{oldLevel}");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" → ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"{newLevel}");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("                                    ║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("║");
+                
+                Console.Write("║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("║");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"  +{xp} XP за {source}");
+                var sourcePad = 58 - xp.ToString().Length - source.Length;
+                Console.Write(new string(' ', Math.Max(0, sourcePad)));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("  ║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("║");
+                
+                Console.Write("║");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("╚═══════════════════════════════════════════════════╝");
+                Console.Write(new string(' ', 20));
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("║");
+                
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.Write("║");
+                    Console.Write(new string(' ', 78));
+                    Console.WriteLine("║");
+                }
+                
+                Console.Write("╚");
+                Console.Write(new string('═', 78));
+                Console.WriteLine("╝");
                 Console.ResetColor();
                 await Task.Delay(3000);
             }
