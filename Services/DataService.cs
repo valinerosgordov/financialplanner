@@ -19,6 +19,8 @@ namespace FinancialPlanner.Services
         private readonly string _budgetsFile;
         private readonly string _categoriesFile;
         private readonly string _levelSystemFile;
+        private readonly string _achievementsFile;
+        private readonly string _recurringTransactionsFile;
 
         public DataService()
         {
@@ -29,6 +31,8 @@ namespace FinancialPlanner.Services
             _budgetsFile = Path.Combine(_dataFolder, "budgets.json");
             _categoriesFile = Path.Combine(_dataFolder, "categories.json");
             _levelSystemFile = Path.Combine(_dataFolder, "level_system.json");
+            _achievementsFile = Path.Combine(_dataFolder, "achievements.json");
+            _recurringTransactionsFile = Path.Combine(_dataFolder, "recurring_transactions.json");
         }
 
         public List<Transaction> LoadTransactions()
@@ -119,6 +123,52 @@ namespace FinancialPlanner.Services
         {
             var json = JsonConvert.SerializeObject(levelSystem, Formatting.Indented);
             File.WriteAllText(_levelSystemFile, json);
+        }
+
+        public List<Achievement> LoadAchievements()
+        {
+            if (!File.Exists(_achievementsFile))
+                return InitializeDefaultAchievements();
+
+            var json = File.ReadAllText(_achievementsFile);
+            return JsonConvert.DeserializeObject<List<Achievement>>(json) ?? InitializeDefaultAchievements();
+        }
+
+        public void SaveAchievements(List<Achievement> achievements)
+        {
+            var json = JsonConvert.SerializeObject(achievements, Formatting.Indented);
+            File.WriteAllText(_achievementsFile, json);
+        }
+
+        private List<Achievement> InitializeDefaultAchievements()
+        {
+            return new List<Achievement>
+            {
+                new Achievement { Title = "Новичок", Description = "Достигните 5 уровня", Icon = "🌟", Type = AchievementType.Level, TargetValue = 5 },
+                new Achievement { Title = "Опытный", Description = "Достигните 10 уровня", Icon = "⭐", Type = AchievementType.Level, TargetValue = 10 },
+                new Achievement { Title = "Мастер", Description = "Достигните 20 уровня", Icon = "💫", Type = AchievementType.Level, TargetValue = 20 },
+                new Achievement { Title = "Трудолюбивый", Description = "Выполните 10 задач", Icon = "✅", Type = AchievementType.TasksCompleted, TargetValue = 10 },
+                new Achievement { Title = "Неутомимый", Description = "Выполните 50 задач", Icon = "🔥", Type = AchievementType.TasksCompleted, TargetValue = 50 },
+                new Achievement { Title = "Привычка", Description = "Выполняйте привычку 7 дней подряд", Icon = "📅", Type = AchievementType.HabitsStreak, TargetValue = 7 },
+                new Achievement { Title = "Финансист", Description = "Добавьте 20 транзакций", Icon = "💰", Type = AchievementType.TransactionsCount, TargetValue = 20 },
+                new Achievement { Title = "Экономист", Description = "Сэкономьте 10000 в бюджете", Icon = "💎", Type = AchievementType.BudgetSaved, TargetValue = 10000 },
+                new Achievement { Title = "Активный", Description = "Используйте приложение 30 дней", Icon = "📊", Type = AchievementType.DaysActive, TargetValue = 30 }
+            };
+        }
+
+        public List<RecurringTransaction> LoadRecurringTransactions()
+        {
+            if (!File.Exists(_recurringTransactionsFile))
+                return new List<RecurringTransaction>();
+
+            var json = File.ReadAllText(_recurringTransactionsFile);
+            return JsonConvert.DeserializeObject<List<RecurringTransaction>>(json) ?? new List<RecurringTransaction>();
+        }
+
+        public void SaveRecurringTransactions(List<RecurringTransaction> transactions)
+        {
+            var json = JsonConvert.SerializeObject(transactions, Formatting.Indented);
+            File.WriteAllText(_recurringTransactionsFile, json);
         }
     }
 }

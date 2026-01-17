@@ -12,12 +12,20 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource BackgroundBrush}">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:TransactionColorConverter x:Key="TransactionColorConverter"/>
         <converters:TransactionBorderConverter x:Key="TransactionBorderConverter"/>
         <converters:BalanceColorConverter x:Key="BalanceColorConverter"/>
         <converters:StrikeThroughConverter x:Key="StrikeThroughConverter"/>
         <converters:BudgetProgressConverter x:Key="BudgetProgressConverter"/>
         <converters:CategoryTotalConverter x:Key="CategoryTotalConverter"/>
+        <converters:TaskCompletedBorderConverter x:Key="TaskCompletedBorderConverter"/>
+        <converters:TaskCompletedEffectConverter x:Key="TaskCompletedEffectConverter"/>
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+        <converters:AchievementBackgroundConverter x:Key="AchievementBackgroundConverter"/>
+        <converters:AchievementBorderConverter x:Key="AchievementBorderConverter"/>
+        <converters:AchievementEffectConverter x:Key="AchievementEffectConverter"/>
+        <converters:CategoryProgressConverter x:Key="CategoryProgressConverter"/>
     </Window.Resources>
     <Window.DataContext>
         <vm:MainViewModel/>
@@ -137,20 +145,125 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="📋 Транзакции" 
-                                      FontSize="24" FontWeight="Bold" 
-                                      Foreground="{StaticResource AnimeText}"
-                                      Margin="0,0,0,15"/>
+                            <Grid Grid.Row="0" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="📋 Транзакции" 
+                                          FontSize="24" FontWeight="Bold" 
+                                          Foreground="{StaticResource AnimeText}"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="📥 Экспорт CSV" 
+                                           Command="{Binding ExportToCsvCommand}"
+                                           Style="{StaticResource SecondaryButtonStyle}"
+                                           Margin="0,0,10,0"/>
+                                </StackPanel>
+                            </Grid>
 
-                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                <ItemsControl ItemsSource="{Binding Transactions}">
+                            <!-- Search and Filters -->
+                            <Border Grid.Row="1" Background="{StaticResource AnimeDarkGray}" 
+                                   CornerRadius="10" Padding="15" Margin="0,0,0,15">
+                                <StackPanel>
+                                    <TextBox Text="{Binding SearchText}" 
+                                            Style="{StaticResource TextBoxStyle}"
+                                            Margin="0,0,0,10"
+                                            Tag="🔍 Поиск..."/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <DatePicker Grid.Column="0" 
+                                                   SelectedDate="{Binding FilterStartDate}"
+                                                   Margin="0,0,5,0"
+                                                   Style="{StaticResource DatePickerStyle}"/>
+                                        <DatePicker Grid.Column="1" 
+                                                   SelectedDate="{Binding FilterEndDate}"
+                                                   Margin="5,0,5,0"
+                                                   Style="{StaticResource DatePickerStyle}"/>
+                                        <ComboBox Grid.Column="2" 
+                                                 SelectedItem="{Binding FilterCategory}"
+                                                 ItemsSource="{Binding Categories}"
+                                                 Style="{StaticResource ComboBoxStyle}"
+                                                 Margin="5,0,0,0">
+                                            <ComboBox.Items>
+                                                <ComboBoxItem Content="Все категории" IsSelected="True"/>
+                                            </ComboBox.Items>
+                                        </ComboBox>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding FilteredTransactions}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type models:Transaction}">
                                             <Border Background="{Binding Type, Converter={StaticResource TransactionColorConverter}}" 
                                                    CornerRadius="10" Padding="18" Margin="0,0,0,12"
                                                    BorderThickness="0,0,5,0"
                                                    BorderBrush="{Binding Type, Converter={StaticResource TransactionBorderConverter}}"
-                                                   Effect="{StaticResource ShadowEffect}">
+                                                   Effect="{StaticResource ShadowEffect}"
+                                                   RenderTransformOrigin="0.5,0.5">
+                                                    <Border.RenderTransform>
+                                                        <TransformGroup>
+                                                            <TranslateTransform X="0" Y="0"/>
+                                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                        </TransformGroup>
+                                                    </Border.RenderTransform>
+                                                <Border.Triggers>
+                                                    <EventTrigger RoutedEvent="Loaded">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                                From="-30" To="0" Duration="0:0:0.3">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <CubicEase EasingMode="EaseOut"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                From="0" To="1" Duration="0:0:0.3">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <CubicEase EasingMode="EaseOut"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="MouseEnter">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                                To="5" Duration="0:0:0.2">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <CubicEase EasingMode="EaseOut"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)"
+                                                                                To="20" Duration="0:0:0.2"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                                                                To="0.4" Duration="0:0:0.2"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="MouseLeave">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                                To="0" Duration="0:0:0.2">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <CubicEase EasingMode="EaseOut"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)"
+                                                                                To="10" Duration="0:0:0.2"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                                                                To="0.1" Duration="0:0:0.2"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </Border.Triggers>
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
@@ -264,6 +377,41 @@
                         <ColumnDefinition Width="380"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Level Up Animation Overlay -->
+                    <Border Grid.Column="0" Grid.ColumnSpan="3"
+                           Background="#80000000" 
+                           Visibility="{Binding ShowLevelUpAnimation, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           Panel.ZIndex="1000">
+                        <Border x:Name="LevelUpBorder" 
+                               Background="{StaticResource AnimeGradientPurple}" 
+                               CornerRadius="20" Padding="40"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Effect="{StaticResource ShadowEffectStrong}"
+                               RenderTransformOrigin="0.5,0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                            </Border.RenderTransform>
+                            <StackPanel>
+                                <TextBlock x:Name="LevelUpText" 
+                                          Text="⚡ LEVEL UP! ⚡" 
+                                          FontSize="48" FontWeight="Bold" 
+                                          Foreground="White"
+                                          HorizontalAlignment="Center"
+                                          Margin="0,0,0,20"
+                                          RenderTransformOrigin="0.5,0.5">
+                                    <TextBlock.RenderTransform>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                                <TextBlock Text="{Binding LevelUpMessage}" 
+                                          FontSize="24" 
+                                          Foreground="White"
+                                          HorizontalAlignment="Center"
+                                          TextAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Border>
+
                     <!-- Daily Entry Content -->
                     <Border Grid.Column="0" Background="{StaticResource CardBackgroundBrush}" 
                            CornerRadius="15" Padding="25" 
@@ -274,17 +422,76 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" 
+                            <!-- Level System Display -->
+                            <Border Grid.Row="0" Background="{StaticResource AnimeGradientPurple}" 
+                                   CornerRadius="12" Padding="20" Margin="0,0,0,20"
+                                   Effect="{StaticResource ShadowEffectGlow}">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="⚡ HUNTER LEVEL" 
+                                                      FontSize="16" FontWeight="Bold" 
+                                                      Foreground="White" Opacity="0.9"
+                                                      Margin="0,0,0,8"/>
+                                            <TextBlock Text="{Binding LevelSystem.Level, StringFormat='Level {0}'}" 
+                                                      FontSize="32" FontWeight="Bold" 
+                                                      Foreground="White"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                            <TextBlock Text="TOTAL XP" 
+                                                      FontSize="12" 
+                                                      Foreground="White" Opacity="0.8"
+                                                      HorizontalAlignment="Right"
+                                                      Margin="0,0,0,5"/>
+                                            <TextBlock Text="{Binding LevelSystem.TotalXP, StringFormat='{}{0:N0}'}" 
+                                                      FontSize="24" FontWeight="Bold" 
+                                                      Foreground="White"
+                                                      HorizontalAlignment="Right"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <TextBlock Text="XP до следующего уровня" 
+                                              FontSize="12" 
+                                              Foreground="White" Opacity="0.8"
+                                              Margin="0,15,0,8"/>
+                                    <ProgressBar Value="{Binding LevelSystem.CurrentLevelXP}" 
+                                                Maximum="{Binding LevelSystem.XPToNextLevel}"
+                                                Height="20" 
+                                                Foreground="White"
+                                                Background="#40000000"
+                                                BorderThickness="0"/>
+                                    <Grid Margin="0,5,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" 
+                                                  Text="{Binding LevelSystem.CurrentLevelXP, StringFormat='{}{0:N0}'}" 
+                                                  FontSize="14" 
+                                                  Foreground="White" Opacity="0.9"/>
+                                        <TextBlock Grid.Column="1" 
+                                                  Text="{Binding LevelSystem.XPToNextLevel, StringFormat='/{0:N0}'}" 
+                                                  FontSize="14" 
+                                                  Foreground="White" Opacity="0.9"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Grid.Row="1" 
                                       Text="{Binding SelectedDailyEntry.Date, StringFormat='{}{0:dd MMMM yyyy}'}" 
                                       FontSize="28" FontWeight="Bold" 
                                       Foreground="{StaticResource AnimeText}"
                                       Margin="0,0,0,20"/>
 
                             <!-- Mood -->
-                            <StackPanel Grid.Row="1" Margin="0,0,0,25">
+                            <StackPanel Grid.Row="2" Margin="0,0,0,25">
                                 <TextBlock Text="😊 Настроение" FontSize="18" FontWeight="SemiBold" 
                                           Foreground="{StaticResource AnimeText}" Margin="0,0,0,12"/>
                                 <Slider Value="{Binding DailyMood}" 
@@ -299,7 +506,7 @@
                             </StackPanel>
 
                             <!-- Habits -->
-                            <StackPanel Grid.Row="2" Margin="0,0,0,25">
+                            <StackPanel Grid.Row="3" Margin="0,0,0,25">
                                 <TextBlock Text="🎯 Привычки" FontSize="18" FontWeight="SemiBold" 
                                           Foreground="{StaticResource AnimeText}" Margin="0,0,0,12"/>
                                 <ItemsControl ItemsSource="{Binding SelectedDailyEntry.Habits}">
@@ -322,7 +529,7 @@
                             </StackPanel>
 
                             <!-- Tasks -->
-                            <StackPanel Grid.Row="3">
+                            <StackPanel Grid.Row="4">
                                 <TextBlock Text="✅ Задачи" FontSize="18" FontWeight="SemiBold" 
                                           Foreground="{StaticResource AnimeText}" Margin="0,0,0,12"/>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="350">
@@ -331,11 +538,14 @@
                                             <DataTemplate>
                                                 <Border Background="{StaticResource AnimeDarkGray}" 
                                                        CornerRadius="10" Padding="15" Margin="0,0,0,10"
-                                                       BorderThickness="1" BorderBrush="{StaticResource AnimePurple}">
+                                                       BorderThickness="1" 
+                                                       BorderBrush="{Binding IsCompleted, Converter={StaticResource TaskCompletedBorderConverter}}"
+                                                       Effect="{Binding IsCompleted, Converter={StaticResource TaskCompletedEffectConverter}}">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto"/>
                                                             <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
                                                             <ColumnDefinition Width="Auto"/>
                                                         </Grid.ColumnDefinitions>
                                                         <CheckBox Grid.Column="0" 
@@ -343,12 +553,53 @@
                                                                  Command="{Binding DataContext.ToggleTaskCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                                  CommandParameter="{Binding}"
                                                                  Margin="0,0,12,0"/>
-                                                        <TextBlock Grid.Column="1" 
-                                                                  Text="{Binding Description}" 
-                                                                  FontSize="15"
-                                                                  Foreground="{StaticResource AnimeText}"
-                                                                  TextDecorations="{Binding IsCompleted, Converter={StaticResource StrikeThroughConverter}}"/>
-                                                        <Button Grid.Column="2" 
+                                                        <StackPanel Grid.Column="1">
+                                                            <TextBlock Text="{Binding Description}" 
+                                                                      FontSize="15" FontWeight="SemiBold"
+                                                                      Foreground="{StaticResource AnimeText}"
+                                                                      TextDecorations="{Binding IsCompleted, Converter={StaticResource StrikeThroughConverter}}"/>
+                                                            <TextBlock Text="{Binding XP, StringFormat='⚡ +{0} XP'}" 
+                                                                      FontSize="12"
+                                                                      Foreground="{StaticResource AnimePurpleBright}"
+                                                                      Margin="0,4,0,0"
+                                                                      Visibility="{Binding IsCompleted, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                                                        </StackPanel>
+                                                        <Border x:Name="XPBadge" 
+                                                               Grid.Column="2" 
+                                                               Background="{StaticResource AnimePurple}" 
+                                                               CornerRadius="6" Padding="8,4" Margin="10,0"
+                                                               Visibility="{Binding IsCompleted, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                               RenderTransformOrigin="0.5,0.5">
+                                                            <Border.RenderTransform>
+                                                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                            </Border.RenderTransform>
+                                                            <TextBlock Text="{Binding XP, StringFormat='+{0} XP'}" 
+                                                                      FontSize="12" FontWeight="Bold"
+                                                                      Foreground="White"/>
+                                                            <Border.Triggers>
+                                                                <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                                                                    <DataTrigger.EnterActions>
+                                                                        <BeginStoryboard>
+                                                                            <Storyboard>
+                                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                                                               From="0" To="1.3" Duration="0:0:0.3" AutoReverse="True">
+                                                                                    <DoubleAnimation.EasingFunction>
+                                                                                        <ElasticEase EasingMode="EaseOut" Oscillations="1"/>
+                                                                                    </DoubleAnimation.EasingFunction>
+                                                                                </DoubleAnimation>
+                                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                                                               From="0" To="1.3" Duration="0:0:0.3" AutoReverse="True">
+                                                                                    <DoubleAnimation.EasingFunction>
+                                                                                        <ElasticEase EasingMode="EaseOut" Oscillations="1"/>
+                                                                                    </DoubleAnimation.EasingFunction>
+                                                                                </DoubleAnimation>
+                                                                            </Storyboard>
+                                                                        </BeginStoryboard>
+                                                                    </DataTrigger.EnterActions>
+                                                                </DataTrigger>
+                                                            </Border.Triggers>
+                                                        </Border>
+                                                        <Button Grid.Column="3" 
                                                                Content="✕" 
                                                                Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                                CommandParameter="{Binding}"
@@ -433,20 +684,33 @@
                                 <!-- Add Task -->
                                 <TextBlock Text="➕ Новая задача" FontSize="16" FontWeight="SemiBold" 
                                           Foreground="{StaticResource AnimeTextSecondary}" Margin="0,20,0,10"/>
-                                <Grid Margin="0,0,0,20">
+                                <TextBox Text="{Binding NewTaskDescription}" 
+                                        Style="{StaticResource TextBoxStyle}"
+                                        Margin="0,0,0,10"/>
+                                <TextBlock Text="Приоритет (1-5, больше = больше XP)" 
+                                          FontSize="12" 
+                                          Foreground="{StaticResource AnimeTextMuted}" 
+                                          Margin="0,0,0,8"/>
+                                <Grid Margin="0,0,0,15">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox Grid.Column="0" 
-                                            Text="{Binding NewTaskDescription}" 
-                                            Style="{StaticResource TextBoxStyle}"/>
-                                    <Button Grid.Column="1" 
-                                           Content="+" 
-                                           Command="{Binding AddTaskCommand}"
-                                           Style="{StaticResource IconButtonStyle}"
-                                           Width="45" Height="45" Margin="10,0,0,0" FontSize="20"/>
+                                    <Slider Grid.Column="0" Minimum="1" Maximum="5" 
+                                           TickFrequency="1" IsSnapToTickEnabled="True"
+                                           Value="{Binding NewTaskPriority}"
+                                           Style="{StaticResource SliderStyle}"/>
+                                    <TextBlock Grid.Column="1" 
+                                              Text="{Binding NewTaskPriority, StringFormat='{}{0} ⚡'}" 
+                                              FontSize="16" FontWeight="Bold"
+                                              Foreground="{StaticResource AnimePurpleBright}"
+                                              Margin="15,0,0,0"
+                                              VerticalAlignment="Center"/>
                                 </Grid>
+                                <Button Content="✨ Добавить задачу" 
+                                       Command="{Binding AddTaskCommand}"
+                                       Style="{StaticResource PrimaryButtonStyle}"
+                                       Margin="0,0,0,20"/>
 
                                 <Button Content="💾 Сохранить" 
                                        Command="{Binding SaveDailyEntryCommand}"
@@ -715,6 +979,75 @@
                 <Grid Margin="20">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
+                            <!-- Achievements -->
+                            <Border Background="{StaticResource CardBackgroundBrush}" 
+                                   CornerRadius="15" Padding="25" Margin="0,0,0,20"
+                                   Effect="{StaticResource ShadowEffect}"
+                                   BorderThickness="2" BorderBrush="{StaticResource AnimePurple}">
+                                <StackPanel>
+                                    <TextBlock Text="🏆 Достижения" 
+                                              FontSize="24" FontWeight="Bold" 
+                                              Foreground="{StaticResource AnimeText}"
+                                              Margin="0,0,0,20"/>
+                                    <ItemsControl ItemsSource="{Binding Achievements}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="3"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding IsUnlocked, Converter={StaticResource AchievementBackgroundConverter}}" 
+                                                       CornerRadius="12" Padding="15" Margin="5"
+                                                       BorderThickness="2" 
+                                                       BorderBrush="{Binding IsUnlocked, Converter={StaticResource AchievementBorderConverter}}"
+                                                       Effect="{Binding IsUnlocked, Converter={StaticResource AchievementEffectConverter}}">
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Icon}" 
+                                                                  FontSize="32" 
+                                                                  HorizontalAlignment="Center"
+                                                                  Margin="0,0,0,8"/>
+                                                        <TextBlock Text="{Binding Title}" 
+                                                                  FontSize="16" FontWeight="Bold"
+                                                                  Foreground="{StaticResource AnimeText}"
+                                                                  HorizontalAlignment="Center"
+                                                                  TextWrapping="Wrap"
+                                                                  Margin="0,0,0,5"/>
+                                                        <TextBlock Text="{Binding Description}" 
+                                                                  FontSize="12"
+                                                                  Foreground="{StaticResource AnimeTextMuted}"
+                                                                  HorizontalAlignment="Center"
+                                                                  TextWrapping="Wrap"
+                                                                  Margin="0,0,0,8"/>
+                                                        <ProgressBar Value="{Binding CurrentValue}" 
+                                                                    Maximum="{Binding TargetValue}"
+                                                                    Height="8" 
+                                                                    Foreground="{StaticResource AnimePurpleBright}"
+                                                                    Background="#40000000"
+                                                                    Margin="0,0,0,5"/>
+                                                        <TextBlock FontSize="11"
+                                                                  Foreground="{StaticResource AnimeTextMuted}"
+                                                                  HorizontalAlignment="Center">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0}/{1}">
+                                                                    <Binding Path="CurrentValue"/>
+                                                                    <Binding Path="TargetValue"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                        <TextBlock Text="✓ Разблокировано" 
+                                                                  FontSize="12" FontWeight="Bold"
+                                                                  Foreground="{StaticResource AnimePurpleBright}"
+                                                                  HorizontalAlignment="Center"
+                                                                  Margin="0,5,0,0"
+                                                                  Visibility="{Binding IsUnlocked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
                             <!-- Categories Statistics -->
                             <Border Background="{StaticResource CardBackgroundBrush}" 
                                    CornerRadius="15" Padding="25" Margin="0,0,0,20"
@@ -751,6 +1084,68 @@
                                                         </TextBlock>
                                                     </Grid>
                                                 </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Expense Chart -->
+                            <Border Background="{StaticResource CardBackgroundBrush}" 
+                                   CornerRadius="15" Padding="25" Margin="0,0,0,20"
+                                   Effect="{StaticResource ShadowEffect}"
+                                   BorderThickness="2" BorderBrush="{StaticResource AnimePurple}">
+                                <StackPanel>
+                                    <TextBlock Text="📊 График расходов по категориям" 
+                                              FontSize="24" FontWeight="Bold" 
+                                              Foreground="{StaticResource AnimeText}"
+                                              Margin="0,0,0,20"/>
+                                    <ItemsControl ItemsSource="{Binding Categories}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,0,0,15">
+                                                    <Grid Margin="0,0,0,8">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" 
+                                                                  Text="{Binding}" 
+                                                                  FontSize="14" FontWeight="SemiBold"
+                                                                  Foreground="{StaticResource AnimeText}"
+                                                                  Width="120"
+                                                                  Margin="0,0,10,0"/>
+                                                        <Border Grid.Column="1" 
+                                                               Background="{StaticResource AnimeDarkGray}" 
+                                                               CornerRadius="6" 
+                                                               Height="25"
+                                                               HorizontalAlignment="Stretch">
+                                                            <Border Background="{StaticResource AnimeGradientPurple}" 
+                                                                   CornerRadius="6"
+                                                                   HorizontalAlignment="Left"
+                                                                   Height="25">
+                                                                <Border.Width>
+                                                                    <MultiBinding Converter="{StaticResource CategoryProgressConverter}">
+                                                                        <Binding Path="DataContext.GetCategoryTotal" 
+                                                                                 RelativeSource="{RelativeSource AncestorType=Window}">
+                                                                            <Binding.ConverterParameter>
+                                                                                <Binding Path="."/>
+                                                                            </Binding.ConverterParameter>
+                                                                        </Binding>
+                                                                        <Binding Path="DataContext.TotalExpenses" 
+                                                                                 RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                                                    </MultiBinding>
+                                                                </Border.Width>
+                                                            </Border>
+                                                        </Border>
+                                                        <TextBlock Grid.Column="2" 
+                                                                  FontSize="14" FontWeight="Bold"
+                                                                  Foreground="{StaticResource AnimePurpleBright}"
+                                                                  Margin="10,0,0,0"
+                                                                  Text="{Binding DataContext.GetCategoryTotal(.), RelativeSource={RelativeSource AncestorType=Window}, StringFormat='{}{0:N0} ₽'}"/>
+                                                    </Grid>
+                                                </StackPanel>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
