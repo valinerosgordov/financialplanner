@@ -28,6 +28,14 @@
                 <views:TransactionInputView/>
             </DataTemplate>
             
+            <DataTemplate DataType="{x:Type viewModels:AnalyticsViewModel}">
+                <views:AnalyticsView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModels:LiquidityViewModel}">
+                <views:LiquidityView/>
+            </DataTemplate>
+            
             <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
                 <views:SettingsView/>
             </DataTemplate>
@@ -36,11 +44,12 @@
                 <views:NeuralCfoView/>
             </DataTemplate>
             
-            <!-- Global Styles -->
+            <!-- Global Styles - MONOCHROME STEALTH GLASS -->
             <Style TargetType="Button" x:Key="NavButton">
-                <Setter Property="Background" Value="#252526"/>
-                <Setter Property="Foreground" Value="#B0B0B0"/>
-                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="#CC1E1E1E"/>
+                <Setter Property="Foreground" Value="#AAAAAA"/>
+                <Setter Property="BorderBrush" Value="#505050"/>
+                <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="15"/>
                 <Setter Property="Margin" Value="0,0,0,10"/>
                 <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -50,19 +59,92 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border Background="{TemplateBinding Background}" 
-                                   CornerRadius="8" 
+                                   BorderBrush="{TemplateBinding BorderBrush}"
+                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                   CornerRadius="6" 
                                    Padding="{TemplateBinding Padding}">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" ShadowDepth="2" BlurRadius="8" Opacity="0.4"/>
+                                </Border.Effect>
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                 VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#2A2A2A"/>
+                                    <Setter Property="Background" Value="#CC2A2A2A"/>
+                                    <Setter Property="BorderBrush" Value="#808080"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+            
+            <!-- Global ComboBox Style - GLASS -->
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="#CC252526"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#505050"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="15"/>
+            </Style>
+            
+            <!-- Global ComboBoxItem Style - GLASS -->
+            <Style TargetType="ComboBoxItem">
+                <Setter Property="Background" Value="#CC1E1E1E"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBoxItem">
+                            <Border Background="{TemplateBinding Background}" 
+                                   Padding="{TemplateBinding Padding}"
+                                   BorderThickness="0">
+                                <ContentPresenter/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsHighlighted" Value="True">
+                        <Setter Property="Background" Value="#C0C0C0"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#C0C0C0"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#C0C0C0"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            
+            <!-- Global TextBox Style - GLASS -->
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="#CC252526"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#505050"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="15"/>
+                <Setter Property="CaretBrush" Value="White"/>
+            </Style>
+            
+            <!-- Global DatePicker Style - GLASS -->
+            <Style TargetType="DatePicker">
+                <Setter Property="Background" Value="#CC252526"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="#505050"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+            
+            <!-- Global DatePickerTextBox Style -->
+            <Style TargetType="DatePickerTextBox">
+                <Setter Property="Background" Value="#CC252526"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

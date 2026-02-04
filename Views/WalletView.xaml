@@ -16,7 +16,7 @@
                     <TextBlock Text="👛 Wallet and Investments" 
                               FontSize="32" 
                               FontWeight="Bold" 
-                              Foreground="#FFD700"/>
+                              Foreground="#E0E0E0"/>
                     <TextBlock Text="Track your accounts and investment portfolio" 
                               FontSize="14" 
                               Foreground="#606060" 
@@ -24,18 +24,22 @@
                 </StackPanel>
             </Grid>
 
-            <!-- TOTAL BALANCE -->
-            <Border Background="#1E1E1E" CornerRadius="12" Padding="30" Margin="0,0,0,20">
+            <!-- TOTAL BALANCE - GLASS -->
+            <Border Background="#CC252526" CornerRadius="12" Padding="30" Margin="0,0,0,20"
+                   BorderBrush="#505050" BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                </Border.Effect>
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="💰 Total Balance" 
                               FontSize="16" 
-                              Foreground="#B0B0B0" 
+                              Foreground="#AAAAAA" 
                               HorizontalAlignment="Center" 
                               Margin="0,0,0,10"/>
                     <TextBlock Text="{Binding TotalBalance, StringFormat='₽{0:N0}'}" 
                               FontSize="48" 
                               FontWeight="Bold" 
-                              Foreground="#FFD700" 
+                              Foreground="#E0E0E0" 
                               HorizontalAlignment="Center"/>
                     <TextBlock Text="Across all accounts" 
                               FontSize="14" 
@@ -45,14 +49,68 @@
                 </StackPanel>
             </Border>
 
-            <!-- ACCOUNTS -->
-            <Border Background="#1E1E1E" CornerRadius="12" Padding="20" Margin="0,0,0,20">
+            <!-- ACCOUNTS - GLASS -->
+            <Border Background="#CC252526" CornerRadius="12" Padding="20" Margin="0,0,0,20"
+                   BorderBrush="#505050" BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                </Border.Effect>
                 <StackPanel>
-                    <TextBlock Text="🏦 Accounts" 
-                              FontSize="20" 
-                              FontWeight="SemiBold" 
-                              Foreground="White" 
-                              Margin="0,0,0,15"/>
+                    <Grid Margin="0,0,0,15">
+                        <TextBlock Text="🏦 Accounts" 
+                                  FontSize="20" 
+                                  FontWeight="SemiBold" 
+                                  Foreground="#E0E0E0" 
+                                  VerticalAlignment="Center"/>
+                        <Button Content="➕ Add Account" 
+                               Command="{Binding AddAccountCommand}"
+                               HorizontalAlignment="Right"
+                               Foreground="Black"
+                               BorderBrush="#808080"
+                               BorderThickness="1"
+                               Padding="15,8"
+                               FontSize="12"
+                               FontWeight="Bold"
+                               Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#E0E0E0" Offset="0"/>
+                                                <GradientStop Color="#C0C0C0" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" 
+                                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                                       CornerRadius="6" 
+                                                       Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <GradientStop Color="#FFFFFF" Offset="0"/>
+                                                        <GradientStop Color="#E0E0E0" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
                     
                     <ItemsControl ItemsSource="{Binding Accounts}">
                         <ItemsControl.ItemTemplate>
@@ -64,6 +122,7 @@
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         
@@ -83,7 +142,31 @@
                                                   FontSize="20" 
                                                   FontWeight="Bold" 
                                                   Foreground="{Binding Color}" 
-                                                  VerticalAlignment="Center"/>
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,15,0"/>
+                                        
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button Content="✏️" 
+                                                   Command="{Binding DataContext.EditAccountCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                   CommandParameter="{Binding Name}"
+                                                   Background="Transparent"
+                                                   Foreground="#AAAAAA"
+                                                   BorderThickness="0"
+                                                   FontSize="14"
+                                                   Padding="5"
+                                                   Cursor="Hand"
+                                                   ToolTip="Edit Account"/>
+                                            <Button Content="🗑️" 
+                                                   Command="{Binding DataContext.DeleteAccountCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                   CommandParameter="{Binding Name}"
+                                                   Background="Transparent"
+                                                   Foreground="#D50000"
+                                                   BorderThickness="0"
+                                                   FontSize="14"
+                                                   Padding="5"
+                                                   Cursor="Hand"
+                                                   ToolTip="Delete Account"/>
+                                        </StackPanel>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -92,15 +175,71 @@
                 </StackPanel>
             </Border>
 
-            <!-- INVESTMENTS -->
-            <Border Background="#1E1E1E" CornerRadius="12" Padding="20">
+            <!-- INVESTMENTS - GLASS -->
+            <Border Background="#CC252526" CornerRadius="12" Padding="20"
+                   BorderBrush="#505050" BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                </Border.Effect>
                 <StackPanel>
                     <Grid Margin="0,0,0,15">
                         <TextBlock Text="📊 Investments" 
                                   FontSize="20" 
                                   FontWeight="SemiBold" 
-                                  Foreground="White"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                  Foreground="#E0E0E0"
+                                  VerticalAlignment="Center"/>
+                        <Button Content="➕ Add Investment" 
+                               Command="{Binding AddInvestmentCommand}"
+                               HorizontalAlignment="Right"
+                               Foreground="Black"
+                               BorderBrush="#808080"
+                               BorderThickness="1"
+                               Padding="15,8"
+                               FontSize="12"
+                               FontWeight="Bold"
+                               Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#E0E0E0" Offset="0"/>
+                                                <GradientStop Color="#C0C0C0" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" 
+                                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                                       CornerRadius="6" 
+                                                       Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <GradientStop Color="#FFFFFF" Offset="0"/>
+                                                        <GradientStop Color="#E0E0E0" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Total Return: " 
                                       FontSize="14" 
                                       Foreground="#B0B0B0" 
@@ -141,15 +280,15 @@
                                         </StackPanel>
                                         
                                         <Border Grid.Column="1" 
-                                               Background="#00E676" 
+                                               Background="{Binding Color}" 
                                                CornerRadius="4" 
                                                Padding="10,5" 
                                                Margin="0,0,20,0"
                                                VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding ReturnPercent, StringFormat='+{0:N1}%'}" 
-                                                      FontSize="14" 
-                                                      FontWeight="Bold" 
-                                                      Foreground="Black"/>
+                                            <TextBlock FontSize="14" FontWeight="Bold" Foreground="Black">
+                                                <Run Text="{Binding ReturnPercent, StringFormat='+{0:N1};-{0:N1};0'}"/>
+                                                <Run Text="%"/>
+                                            </TextBlock>
                                         </Border>
                                         
                                         <TextBlock Grid.Column="2" 
@@ -157,7 +296,31 @@
                                                   FontSize="20" 
                                                   FontWeight="Bold" 
                                                   Foreground="{Binding Color}" 
-                                                  VerticalAlignment="Center"/>
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,15,0"/>
+                                        
+                                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button Content="✏️" 
+                                                   Command="{Binding DataContext.EditInvestmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                   CommandParameter="{Binding Name}"
+                                                   Background="Transparent"
+                                                   Foreground="#AAAAAA"
+                                                   BorderThickness="0"
+                                                   FontSize="14"
+                                                   Padding="5"
+                                                   Cursor="Hand"
+                                                   ToolTip="Edit Investment"/>
+                                            <Button Content="🗑️" 
+                                                   Command="{Binding DataContext.DeleteInvestmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                   CommandParameter="{Binding Name}"
+                                                   Background="Transparent"
+                                                   Foreground="#D50000"
+                                                   BorderThickness="0"
+                                                   FontSize="14"
+                                                   Padding="5"
+                                                   Cursor="Hand"
+                                                   ToolTip="Delete Investment"/>
+                                        </StackPanel>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

@@ -1,194 +1,237 @@
-# ⚡ NexusFinance
+# NexusFinance
 
-<!-- ![Logo Placeholder](docs/logo.png) -->
+> A native Windows quantitative finance terminal built with WPF and .NET 8
 
-[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
-[![WPF](https://img.shields.io/badge/WPF-Native-0078D4?logo=windows)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4)](https://dotnet.microsoft.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![WPF](https://img.shields.io/badge/Framework-WPF-0078D4)](https://github.com/dotnet/wpf)
 
-**A high-performance, native Windows desktop application for advanced personal and project financial planning.**
+**NexusFinance** is a professional-grade financial planning application designed for developers, entrepreneurs, and quantitative analysts who need advanced analytics and a modern, distraction-free interface.
 
-NexusFinance is a modern **"Quant Terminal"** for developers, freelancers, and solo entrepreneurs who need to manage both **Personal** and **Business/Project finances** in one place. Built with a stunning **Dark/Neon aesthetic** inspired by trading terminals and cyberpunk design.
-
----
-
-## ✨ Features
-
-- 📊 **Multi-View Dashboard** – Real-time KPIs for Net Worth, Income, Expenses, and Savings Rate
-- 🚀 **Project Analytics** – Track revenue, costs, and profitability across multiple projects (e.g., NexusAI, FinSync)
-- 👛 **Wallet & Investments** – Monitor bank accounts, crypto holdings, stocks, and real estate investments
-- ➕ **Transaction Input** – Fast, keyboard-optimized data entry with Income/Expense categorization
-- 💎 **Double-Entry Ledger** *(Planned)* – Accounting-grade transaction tracking
-- 📈 **Live Charts** – Beautiful, animated charts powered by LiveCharts2
-- 🌙 **Dark/Neon UI** – Eye-friendly theme with vibrant accent colors (Violet, Green, Red, Cyan, Gold)
-- 🎨 **MVVM Architecture** – Clean separation of concerns using CommunityToolkit.Mvvm
+![NexusFinance Interface](docs/screenshot.png)
 
 ---
 
-## 🛠️ Tech Stack
+## Features
 
-| Technology | Purpose | Version |
-|-----------|---------|---------|
-| [.NET 8](https://dotnet.microsoft.com/) | Runtime Framework | 8.0 |
-| [WPF (Windows Presentation Foundation)](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/) | Native Windows UI | .NET 8 |
-| [CommunityToolkit.Mvvm](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/) | MVVM Framework | 8.3.2 |
-| [MaterialDesignInXamlToolkit](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit) | UI Components | 5.1.0 |
-| [LiveCharts2](https://github.com/beto-rodriguez/LiveCharts2) | Data Visualization (SkiaSharp) | 2.0.0-rc4.3 |
-| [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/) | ORM (Planned) | 8.0.11 |
-| [SQLite](https://www.sqlite.org/) | Local Database (Planned) | 3.x |
-| [ClosedXML](https://github.com/ClosedXML/ClosedXML) | Excel Export (Planned) | 0.104.1 |
+### Financial Management
+- **Multi-Project Tracking** - Separate personal and business finances with project-level P&L analysis
+- **Double-Entry Ledger** - Professional-grade transaction tracking with full audit trail
+- **Team & Payroll** - Manage project teams and calculate monthly labor costs
+- **Liquidity Forecasting** - Track payables and receivables with urgency-based prioritization
+
+### Advanced Analytics
+- **Sankey Diagrams** - Visualize cash flow from income sources to expense categories
+- **Correlation Matrix** - Analyze asset diversification and portfolio risk exposure
+- **Real-Time Calculations** - Net worth, burn rate, and savings rate updated instantly
+
+### Neural CFO (Experimental)
+- **AI-Powered Analysis** - Integrate with Google Gemini for financial insights
+- **Contextual Recommendations** - Get actionable advice based on your current financial state
+- **Secure API Storage** - API keys encrypted using Windows DPAPI
+
+### Internationalization
+- **Multi-Language Support** - English and Russian with hot-swapping (no restart required)
+- **Culture-Aware Formatting** - Automatic currency symbols, date formats, and number separators
+- **Extensible** - Easy to add additional languages via `.resx` files
 
 ---
 
-## 🚀 Getting Started
+## Tech Stack
+
+| Component | Technology |
+|-----------|-----------|
+| **Framework** | .NET 8 (WPF) |
+| **Architecture** | MVVM with `CommunityToolkit.Mvvm` |
+| **UI Library** | MaterialDesignThemes |
+| **Charting** | LiveCharts2 (SkiaSharp) |
+| **AI Integration** | Microsoft Semantic Kernel + Google Gemini |
+| **Data Persistence** | JSON (System.Text.Json) |
+| **Security** | Windows DPAPI for secrets |
+
+---
+
+## Getting Started
 
 ### Prerequisites
-
-- **Windows 10/11** (64-bit)
-- **.NET 8 SDK** – [Download here](https://dotnet.microsoft.com/download/dotnet/8.0)
-- **Visual Studio 2022** or **JetBrains Rider** (recommended for WPF development)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or higher
+- Windows 10/11 (WPF is Windows-only)
+- Visual Studio 2022 or Rider (optional, for development)
 
 ### Installation
 
-1. **Clone the repository:**
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/NexusFinance.git
-   cd NexusFinance
+   git clone https://github.com/yourusername/nexusfinance.git
+   cd nexusfinance
    ```
 
-2. **Restore dependencies:**
+2. **Restore dependencies**
    ```bash
    dotnet restore
    ```
 
-3. **Build the project:**
+3. **Build the application**
    ```bash
    dotnet build
    ```
 
-4. **Run the application:**
+4. **Run**
    ```bash
    dotnet run --project NexusFinance.csproj
    ```
 
-Alternatively, open `financialplanner.sln` in Visual Studio and press **F5**.
+The application will launch with sample seed data to help you get started.
 
 ---
 
-## 📸 Screenshots
+## Usage
 
-> **Note:** Screenshots will be added soon. The application features a stunning dark/neon UI with multiple views.
+### Quick Start
 
-<!-- ![Dashboard](docs/screenshots/dashboard.png) -->
-<!-- ![Projects](docs/screenshots/projects.png) -->
-<!-- ![Wallet](docs/screenshots/wallet.png) -->
+1. **Dashboard** - View your net worth, monthly income/expense, and savings rate
+2. **Add Transaction** - Click the `+` button to record income or expenses
+3. **Projects** - Create projects to separate business ventures from personal finances
+4. **Wallet** - Manage accounts (checking, savings, cash) and investments (stocks, crypto)
+5. **Analytics** - Explore cash flow visualizations and asset correlations
+6. **Liquidity** - Track money you owe and money owed to you
+7. **Settings** - Configure language and Neural CFO API key (optional)
+
+### Data Storage
+
+Financial data is stored locally in JSON format:
+```
+%APPDATA%\NexusFinance\data.json
+```
+
+### Neural CFO Setup (Optional)
+
+To enable AI-powered financial analysis:
+
+1. Get a free API key from [Google AI Studio](https://ai.google.dev/)
+2. Open **Settings** in NexusFinance
+3. Paste your API key and click **Save**
+4. Navigate to **Neural CFO** to ask financial questions
 
 ---
 
-## 🏗️ Project Structure
+## Architecture
+
+### Project Structure
 
 ```
 NexusFinance/
-├── App.xaml                    # Application entry point & global resources
-├── App.xaml.cs                 # Application code-behind
-├── MainWindow.xaml             # Main window layout (sidebar + content area)
-├── MainWindow.xaml.cs          # Main window code-behind
-├── ViewModels/                 # MVVM ViewModels
-│   ├── MainViewModel.cs        # Navigation & active view management
-│   ├── DashboardViewModel.cs   # Dashboard data & logic
-│   ├── ProjectAnalyticsViewModel.cs
-│   ├── WalletViewModel.cs
-│   └── TransactionInputViewModel.cs
-├── Views/                      # XAML User Controls
-│   ├── DashboardView.xaml      # Main dashboard with KPIs & charts
-│   ├── ProjectAnalyticsView.xaml
-│   ├── WalletView.xaml
-│   └── TransactionInputView.xaml
-├── Converters/                 # WPF Value Converters
-│   └── AmountToWidthConverter.cs
-└── NexusFinance.csproj         # Project file
+├── Models/              # Data entities (Project, Transaction, Account, etc.)
+├── ViewModels/          # MVVM ViewModels with CommunityToolkit.Mvvm
+├── Views/               # XAML views and user controls
+├── Services/            # Business logic and data access
+│   ├── DataService.cs           # JSON persistence and CRUD operations
+│   ├── LocalizationService.cs   # I18N/L10N management
+│   ├── GeminiAnalysisService.cs # AI integration
+│   └── CorrelationService.cs    # Statistical analysis
+├── Properties/
+│   └── Languages/       # .resx files for localization
+└── NexusFinance.csproj
 ```
 
----
+### Design System: "Monochrome Stealth Glass"
 
-## 🎨 Design Philosophy
-
-NexusFinance is built with a **"Developer-First"** mindset:
-
-- **Fast Data Entry:** Keyboard shortcuts and auto-complete for rapid transaction logging.
-- **Information Density:** Show as much data as possible without clutter (inspired by Bloomberg Terminal).
-- **Visual Hierarchy:** Use color psychology – Green (income), Red (expense), Violet (primary), Cyan (business).
-- **Zero Latency:** Native WPF + SkiaSharp rendering for 60fps animations.
+The UI follows a minimalist, high-density design philosophy:
+- **Colors:** Monochrome palette (black, grey, silver) with functional green/red for financial indicators
+- **Glass Surfaces:** Semi-transparent panels with subtle borders and drop shadows
+- **Typography:** Clean sans-serif fonts with a clear hierarchy
+- **Density:** Maximum information in minimum space (inspired by Bloomberg Terminal)
 
 ---
 
-## 🗺️ Roadmap
+## Localization
 
-### ✅ Phase 1: Core UI (Completed)
-- [x] Dashboard with KPI cards
-- [x] Project Analytics view
-- [x] Wallet & Investments view
-- [x] Transaction Input form
-- [x] Sidebar navigation
-- [x] Dark/Neon theme
+NexusFinance supports multiple languages with runtime hot-swapping:
 
-### 🚧 Phase 2: Data Layer (In Progress)
-- [ ] SQLite database setup with EF Core
-- [ ] Double-Entry Ledger implementation
-- [ ] Transaction CRUD operations
-- [ ] Project/Category management
+### Supported Languages
+- 🇺🇸 **English** (en-US) - Default
+- 🇷🇺 **Russian** (ru-RU) - Complete
 
-### 📅 Phase 3: Advanced Features (Planned)
-- [ ] Excel Import/Export (ClosedXML)
-- [ ] Multi-currency support with live exchange rates
-- [ ] Budget tracking & alerts
-- [ ] Recurring transactions
+### Adding a New Language
+
+1. Create `Properties/Languages/Strings.[culture-code].resx`
+2. Translate all keys from `Strings.resx`
+3. Add the language to `SettingsViewModel.cs`:
+   ```csharp
+   new LanguageOption { Code = "fr-FR", DisplayName = "🇫🇷 Français" }
+   ```
+4. Rebuild and run
+
+See [LOCALIZATION_GUIDE.md](LOCALIZATION_GUIDE.md) for detailed instructions.
+
+---
+
+## Security
+
+### API Key Storage
+API keys (e.g., for Google Gemini) are encrypted using **Windows Data Protection API (DPAPI)** and stored in:
+```
+%APPDATA%\NexusFinance\secure\apikey.enc
+```
+
+### Best Practices
+- Never commit `data.json` to version control
+- Keep API keys secure and do not share `.enc` files
+- The `.gitignore` is pre-configured to exclude sensitive files
+
+---
+
+## Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. **Fork** the repository
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
+4. **Push to the branch** (`git push origin feature/amazing-feature`)
+5. **Open a Pull Request**
+
+### Code Standards
+- Follow C# naming conventions (PascalCase for classes/methods, camelCase for fields)
+- Use `var` for local variables where type is obvious
+- Add XML documentation for public APIs
+- Maintain the "Monochrome Stealth Glass" design system
+
+---
+
+## Roadmap
+
+- [ ] Export to Excel (ClosedXML integration)
+- [ ] Recurring transactions automation
+- [ ] Budget tracking and alerts
+- [ ] Multi-currency support (live exchange rates)
+- [ ] Mobile companion app (MAUI)
+- [ ] Cloud sync (Azure/Firebase)
 - [ ] Monte Carlo risk simulation
-- [ ] AI-powered insights (Semantic Kernel)
+- [ ] Tax optimization recommendations
 
 ---
 
-## 🤝 Contributing
+## License
 
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-**Coding Standards:**
-- Follow [C# Coding Conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
-- Use MVVM pattern strictly (no logic in code-behind)
-- Use `CommunityToolkit.Mvvm` source generators (`[ObservableProperty]`, `[RelayCommand]`)
-- Enable nullable reference types (`<Nullable>enable</Nullable>`)
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📜 License
+## Acknowledgments
 
-This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- [MaterialDesignInXamlToolkit](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit) – Beautiful Material Design components for WPF
-- [LiveCharts2](https://github.com/beto-rodriguez/LiveCharts2) – Amazing data visualization library
-- [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) – Modern MVVM helpers
-- Inspired by Bloomberg Terminal, TradingView, and Cyberpunk aesthetics
+- **MaterialDesignInXamlToolkit** - UI components
+- **LiveCharts2** - High-performance charting
+- **Microsoft Semantic Kernel** - AI integration framework
+- **CommunityToolkit.Mvvm** - Modern MVVM helpers
 
 ---
 
-## 📧 Contact
+## Support
 
-**Project Maintainer:** [Your Name]  
-**Email:** your.email@example.com  
-**GitHub:** [@yourusername](https://github.com/yourusername)
+- **Issues:** [GitHub Issues](https://github.com/yourusername/nexusfinance/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/yourusername/nexusfinance/discussions)
 
 ---
 
-<p align="center">
-  Made with ⚡ and 💜 for the Developer Community
-</p>
+**Built with .NET 8 and WPF** | **Designed for Developers, Entrepreneurs, and Quants**

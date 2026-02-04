@@ -1,0 +1,182 @@
+<Window x:Class="NexusFinance.Views.PayableEditorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Payable Editor" 
+        Height="550" Width="600"
+        Background="#050505"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    
+    <Border Background="#CC252526" 
+           CornerRadius="12" 
+           BorderBrush="#505050"
+           BorderThickness="1"
+           Margin="20">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+        </Border.Effect>
+        
+        <StackPanel Margin="30">
+            
+            <!-- HEADER -->
+            <TextBlock Text="⚠️ Payable (Money I Owe)" 
+                      FontSize="28" 
+                      FontWeight="Bold" 
+                      Foreground="#E0E0E0" 
+                      Margin="0,0,0,30"/>
+
+            <!-- TITLE -->
+            <StackPanel Margin="0,0,0,20">
+                <TextBlock Text="Title / Description" FontSize="14" Foreground="#AAAAAA" Margin="0,0,0,10"/>
+                <TextBox x:Name="TitleBox"
+                        Background="#CC252526"
+                        Foreground="White"
+                        BorderBrush="#505050"
+                        BorderThickness="1"
+                        Padding="15"
+                        FontSize="14">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="6"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+
+            <!-- CREDITOR NAME -->
+            <StackPanel Margin="0,0,0,20">
+                <TextBlock Text="Creditor (Who I Pay)" FontSize="14" Foreground="#AAAAAA" Margin="0,0,0,10"/>
+                <TextBox x:Name="CreditorBox"
+                        Background="#CC252526"
+                        Foreground="White"
+                        BorderBrush="#505050"
+                        BorderThickness="1"
+                        Padding="15"
+                        FontSize="14">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="6"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+
+            <!-- AMOUNT -->
+            <StackPanel Margin="0,0,0,20">
+                <TextBlock Text="Amount (₽)" FontSize="14" Foreground="#AAAAAA" Margin="0,0,0,10"/>
+                <TextBox x:Name="AmountBox"
+                        Background="#CC252526"
+                        Foreground="White"
+                        BorderBrush="#505050"
+                        BorderThickness="1"
+                        Padding="15"
+                        FontSize="14"
+                        Text="0">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="6"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+            </StackPanel>
+
+            <!-- DUE DATE -->
+            <StackPanel Margin="0,0,0,30">
+                <TextBlock Text="Due Date" FontSize="14" Foreground="#AAAAAA" Margin="0,0,0,10"/>
+                <DatePicker x:Name="DueDateBox"
+                           Background="#CC252526"
+                           Foreground="White"
+                           BorderBrush="#505050"
+                           BorderThickness="1"
+                           Padding="15"
+                           FontSize="14"/>
+            </StackPanel>
+
+            <!-- BUTTONS -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- SAVE BUTTON -->
+                <Button Grid.Column="0"
+                       Content="✅ Save" 
+                       Click="SaveButton_Click"
+                       Foreground="Black"
+                       BorderBrush="#808080"
+                       BorderThickness="1"
+                       Padding="20,12"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Cursor="Hand"
+                       Margin="0,0,10,0">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#E0E0E0" Offset="0"/>
+                                        <GradientStop Color="#C0C0C0" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" 
+                                               BorderBrush="{TemplateBinding BorderBrush}"
+                                               BorderThickness="{TemplateBinding BorderThickness}"
+                                               CornerRadius="6" 
+                                               Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#FFFFFF" Offset="0"/>
+                                                <GradientStop Color="#E0E0E0" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- CANCEL BUTTON -->
+                <Button Grid.Column="1"
+                       Content="❌ Cancel" 
+                       Click="CancelButton_Click"
+                       Background="#CC505050"
+                       Foreground="White"
+                       BorderBrush="#808080"
+                       BorderThickness="1"
+                       Padding="20,12"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Cursor="Hand"
+                       Margin="10,0,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                   BorderBrush="{TemplateBinding BorderBrush}"
+                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                   CornerRadius="6" 
+                                   Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+        </StackPanel>
+    </Border>
+</Window>

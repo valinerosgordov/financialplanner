@@ -21,7 +21,7 @@
                     <TextBlock Text="⚙️ Settings" 
                               FontSize="36" 
                               FontWeight="Bold" 
-                              Foreground="#8A2BE2"/>
+                              Foreground="#E0E0E0"/>
                     <TextBlock Text="Configure AI and application settings" 
                               FontSize="16" 
                               Foreground="#606060" 
@@ -58,10 +58,10 @@
                     <!-- API KEY INPUT -->
                     <PasswordBox x:Name="ApiKeyBox" 
                                 FontSize="14" 
-                                Background="#252526"
+                                Background="#CC252526"
                                 Foreground="White"
-                                BorderBrush="#8A2BE2"
-                                BorderThickness="2"
+                                BorderBrush="#505050"
+                                BorderThickness="1"
                                 Padding="15"
                                 Margin="0,0,0,15"
                                 PasswordChanged="ApiKeyBox_PasswordChanged">
@@ -83,36 +83,60 @@
                         <Button Grid.Column="0"
                                Content="💾 Save API Key" 
                                Command="{Binding SaveApiKeyCommand}"
-                               Background="#8A2BE2"
-                               Foreground="White"
-                               BorderThickness="0"
+                               Foreground="Black"
+                               BorderBrush="#808080"
+                               BorderThickness="1"
                                Padding="20,12"
                                FontSize="14"
-                               FontWeight="SemiBold"
+                               FontWeight="Bold"
                                Cursor="Hand"
                                Margin="0,0,10,0">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" 
-                                           CornerRadius="8" 
-                                           Padding="{TemplateBinding Padding}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#E0E0E0" Offset="0"/>
+                                                <GradientStop Color="#C0C0C0" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" 
+                                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                                       CornerRadius="6" 
+                                                       Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#9A3BF2"/>
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <GradientStop Color="#FFFFFF" Offset="0"/>
+                                                        <GradientStop Color="#E0E0E0" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
                                         </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
                         </Button>
                         
                         <Button Grid.Column="1"
                                Content="🧪 Test" 
                                Command="{Binding TestConnectionCommand}"
-                               Background="#00BCD4"
+                               Background="#CC505050"
                                Foreground="White"
-                               BorderThickness="0"
+                               BorderBrush="#808080"
+                               BorderThickness="1"
                                Padding="20,12"
                                FontSize="14"
                                FontWeight="SemiBold"

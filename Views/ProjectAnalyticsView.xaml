@@ -16,7 +16,7 @@
                     <TextBlock Text="🚀 Project Analytics" 
                               FontSize="32" 
                               FontWeight="Bold" 
-                              Foreground="#00BCD4"/>
+                              Foreground="#E0E0E0"/>
                     <TextBlock Text="Deep dive into project performance and costs" 
                               FontSize="14" 
                               Foreground="#606060" 
@@ -24,10 +24,64 @@
                 </StackPanel>
             </Grid>
 
-            <!-- PROJECT SELECTOR -->
-            <Border Background="#1E1E1E" CornerRadius="12" Padding="20" Margin="0,0,0,20">
+            <!-- PROJECT SELECTOR - GLASS -->
+            <Border Background="#CC252526" CornerRadius="12" Padding="20" Margin="0,0,0,20"
+                   BorderBrush="#505050" BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                </Border.Effect>
                 <StackPanel>
-                    <TextBlock Text="Select Project" FontSize="16" Foreground="#B0B0B0" Margin="0,0,0,10"/>
+                    <Grid Margin="0,0,0,15">
+                        <TextBlock Text="Select Project" FontSize="16" Foreground="#AAAAAA" VerticalAlignment="Center"/>
+                        <Button Content="➕ Add Project" 
+                               Command="{Binding AddProjectCommand}"
+                               HorizontalAlignment="Right"
+                               Foreground="Black"
+                               BorderBrush="#808080"
+                               BorderThickness="1"
+                               Padding="15,8"
+                               FontSize="12"
+                               FontWeight="Bold"
+                               Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#E0E0E0" Offset="0"/>
+                                                <GradientStop Color="#C0C0C0" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" 
+                                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                                       BorderThickness="{TemplateBinding BorderThickness}"
+                                                       CornerRadius="6" 
+                                                       Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <GradientStop Color="#FFFFFF" Offset="0"/>
+                                                        <GradientStop Color="#E0E0E0" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
                     <ItemsControl ItemsSource="{Binding Projects}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -36,24 +90,49 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding}" 
-                                       Command="{Binding DataContext.SelectProjectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                       CommandParameter="{Binding}"
-                                       Background="#252526"
-                                       Foreground="White"
-                                       BorderThickness="2"
-                                       BorderBrush="#8A2BE2"
-                                       Padding="20,10"
-                                       Margin="0,0,10,0"
-                                       FontSize="14"
-                                       FontWeight="SemiBold"
-                                       Cursor="Hand">
-                                    <Button.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="8"/>
-                                        </Style>
-                                    </Button.Resources>
-                                </Button>
+                                <Grid Margin="0,0,10,10">
+                                    <Button Content="{Binding}" 
+                                           Command="{Binding DataContext.SelectProjectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                           CommandParameter="{Binding}"
+                                           Background="#CC1E1E1E"
+                                           Foreground="White"
+                                           BorderThickness="1"
+                                           BorderBrush="#505050"
+                                           Padding="20,10,50,10"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"
+                                           Cursor="Hand">
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    
+                                    <!-- EDIT/DELETE BUTTONS -->
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
+                                        <Button Content="✏️" 
+                                               Command="{Binding DataContext.EditProjectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                               CommandParameter="{Binding}"
+                                               Background="Transparent"
+                                               Foreground="#AAAAAA"
+                                               BorderThickness="0"
+                                               FontSize="12"
+                                               Padding="5"
+                                               Cursor="Hand"
+                                               ToolTip="Edit Project"/>
+                                        <Button Content="🗑️" 
+                                               Command="{Binding DataContext.DeleteProjectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                               CommandParameter="{Binding}"
+                                               Background="Transparent"
+                                               Foreground="#D50000"
+                                               BorderThickness="0"
+                                               FontSize="12"
+                                               Padding="5"
+                                               Cursor="Hand"
+                                               ToolTip="Delete Project"/>
+                                    </StackPanel>
+                                </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -69,50 +148,70 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Total Revenue -->
-                <Border Grid.Column="0" Background="#1E1E1E" CornerRadius="12" Padding="20" Margin="0,0,10,0">
+                <!-- Total Revenue - GLASS -->
+                <Border Grid.Column="0" Background="#CC252526" CornerRadius="12" Padding="20" Margin="0,0,10,0"
+                       BorderBrush="#505050" BorderThickness="1">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                    </Border.Effect>
                     <StackPanel>
-                        <TextBlock Text="💰 Total Revenue" FontSize="14" Foreground="#B0B0B0" Margin="0,0,0,10"/>
+                        <TextBlock Text="💰 Total Revenue" FontSize="14" Foreground="#AAAAAA" Margin="0,0,0,10"/>
                         <TextBlock Text="{Binding TotalRevenue, StringFormat='₽{0:N0}'}" 
-                                  FontSize="26" FontWeight="Bold" Foreground="#00E676"/>
+                                  FontSize="26" FontWeight="Bold" Foreground="#00C853"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Total Cost -->
-                <Border Grid.Column="1" Background="#1E1E1E" CornerRadius="12" Padding="20" Margin="5,0,5,0">
+                <!-- Total Cost - GLASS -->
+                <Border Grid.Column="1" Background="#CC252526" CornerRadius="12" Padding="20" Margin="5,0,5,0"
+                       BorderBrush="#505050" BorderThickness="1">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                    </Border.Effect>
                     <StackPanel>
-                        <TextBlock Text="💸 Total Cost" FontSize="14" Foreground="#B0B0B0" Margin="0,0,0,10"/>
+                        <TextBlock Text="💸 Total Cost" FontSize="14" Foreground="#AAAAAA" Margin="0,0,0,10"/>
                         <TextBlock Text="{Binding TotalCost, StringFormat='₽{0:N0}'}" 
-                                  FontSize="26" FontWeight="Bold" Foreground="#FF1744"/>
+                                  FontSize="26" FontWeight="Bold" Foreground="#D50000"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Net Profit -->
-                <Border Grid.Column="2" Background="#1E1E1E" CornerRadius="12" Padding="20" Margin="5,0,5,0">
+                <!-- Net Profit - GLASS -->
+                <Border Grid.Column="2" Background="#CC252526" CornerRadius="12" Padding="20" Margin="5,0,5,0"
+                       BorderBrush="#505050" BorderThickness="1">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                    </Border.Effect>
                     <StackPanel>
-                        <TextBlock Text="📊 Net Profit" FontSize="14" Foreground="#B0B0B0" Margin="0,0,0,10"/>
+                        <TextBlock Text="📊 Net Profit" FontSize="14" Foreground="#AAAAAA" Margin="0,0,0,10"/>
                         <TextBlock Text="{Binding NetProfit, StringFormat='₽{0:N0}'}" 
-                                  FontSize="26" FontWeight="Bold" Foreground="#8A2BE2"/>
+                                  FontSize="26" FontWeight="Bold" Foreground="#C0C0C0"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Profit Margin -->
-                <Border Grid.Column="3" Background="#1E1E1E" CornerRadius="12" Padding="20" Margin="10,0,0,0">
+                <!-- Profit Margin - GLASS -->
+                <Border Grid.Column="3" Background="#CC252526" CornerRadius="12" Padding="20" Margin="10,0,0,0"
+                       BorderBrush="#505050" BorderThickness="1">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                    </Border.Effect>
                     <StackPanel>
-                        <TextBlock Text="📈 Profit Margin" FontSize="14" Foreground="#B0B0B0" Margin="0,0,0,10"/>
+                        <TextBlock Text="📈 Profit Margin" FontSize="14" Foreground="#AAAAAA" Margin="0,0,0,10"/>
                         <TextBlock Text="{Binding ProfitMargin, StringFormat='{}{0:N1}%'}" 
-                                  FontSize="26" FontWeight="Bold" Foreground="#00BCD4"/>
+                                  FontSize="26" FontWeight="Bold" Foreground="#909090"/>
                     </StackPanel>
                 </Border>
             </Grid>
 
-            <!-- ALL PROJECTS TABLE -->
-            <Border Background="#1E1E1E" CornerRadius="12" Padding="20">
+            <!-- ALL PROJECTS TABLE - GLASS -->
+            <Border Background="#CC252526" CornerRadius="12" Padding="20"
+                   BorderBrush="#505050" BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                </Border.Effect>
                 <StackPanel>
                     <TextBlock Text="📋 All Projects Overview" 
                               FontSize="20" 
                               FontWeight="SemiBold" 
-                              Foreground="White" 
+                              Foreground="#E0E0E0" 
                               Margin="0,0,0,15"/>
                     
                     <DataGrid ItemsSource="{Binding ProjectSummaries}"
@@ -174,7 +273,7 @@
                             <DataGridTextColumn Header="Profit" Binding="{Binding Profit, StringFormat='₽{0:N0}'}" Width="150">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="#8A2BE2"/>
+                                        <Setter Property="Foreground" Value="#C0C0C0"/>
                                         <Setter Property="FontWeight" Value="Bold"/>
                                         <Setter Property="HorizontalAlignment" Value="Right"/>
                                         <Setter Property="Padding" Value="15,10"/>
@@ -183,6 +282,247 @@
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                </StackPanel>
+            </Border>
+
+            <!-- TEAM & PAYROLL SECTION -->
+            <Border Background="#CC252526" 
+                   CornerRadius="12" 
+                   Padding="20"
+                   Margin="0,30,0,0"
+                   BorderBrush="#505050" 
+                   BorderThickness="1">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="4" BlurRadius="10" Opacity="0.5"/>
+                </Border.Effect>
+                
+                <StackPanel>
+                    <Grid Margin="0,0,0,20">
+                        <TextBlock Text="👥 Team &amp; Payroll" 
+                                  FontSize="20" 
+                                  FontWeight="SemiBold" 
+                                  Foreground="#E0E0E0"
+                                  VerticalAlignment="Center"/>
+                        
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Border Background="#CC1E1E1E" 
+                                   CornerRadius="6" 
+                                   Padding="15,8"
+                                   BorderBrush="#D50000"
+                                   BorderThickness="1"
+                                   Margin="0,0,15,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Total Monthly Payroll: " 
+                                              FontSize="12" 
+                                              Foreground="#909090"
+                                              VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalMonthlyPayroll, StringFormat='₽{0:N0}'}" 
+                                              FontSize="16" 
+                                              FontWeight="Bold" 
+                                              Foreground="#FF5252"
+                                              Margin="5,0,0,0"
+                                              VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <Button Content="➕ Add Member" 
+                                   Command="{Binding AddTeamMemberCommand}"
+                                   Foreground="Black"
+                                   BorderBrush="#808080"
+                                   BorderThickness="1"
+                                   Padding="15,8"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   Cursor="Hand">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Color="#E0E0E0" Offset="0"/>
+                                                    <GradientStop Color="#C0C0C0" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" 
+                                                           BorderBrush="{TemplateBinding BorderBrush}"
+                                                           BorderThickness="{TemplateBinding BorderThickness}"
+                                                           CornerRadius="6" 
+                                                           Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    
+                    <!-- TEAM MEMBERS TABLE -->
+                    <DataGrid ItemsSource="{Binding TeamMembers}"
+                             AutoGenerateColumns="False"
+                             Background="Transparent"
+                             Foreground="#E0E0E0"
+                             BorderThickness="0"
+                             HeadersVisibility="Column"
+                             GridLinesVisibility="None"
+                             RowBackground="#0A000000"
+                             AlternatingRowBackground="#0FFFFFFF"
+                             CanUserAddRows="False"
+                             CanUserDeleteRows="False"
+                             IsReadOnly="True"
+                             SelectionMode="Single"
+                             RowHeight="45">
+                        
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="#808080"/>
+                                <Setter Property="FontSize" Value="11"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Padding" Value="12,10"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="BorderBrush" Value="#202020"/>
+                            </Style>
+                            
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="12,0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="DataGridCell">
+                                            <Border Background="{TemplateBinding Background}" 
+                                                   Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGrid.Resources>
+                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="NAME" 
+                                               Binding="{Binding Name}" 
+                                               Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#E0E0E0"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            
+                            <DataGridTextColumn Header="ROLE" 
+                                               Binding="{Binding Role}" 
+                                               Width="200">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#909090"/>
+                                        <Setter Property="FontSize" Value="12"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            
+                            <DataGridTextColumn Header="SALARY" 
+                                               Binding="{Binding Salary, StringFormat='₽{0:N0}'}" 
+                                               Width="120">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#C0C0C0"/>
+                                        <Setter Property="FontSize" Value="12"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            
+                            <DataGridTextColumn Header="FREQUENCY" 
+                                               Binding="{Binding PaymentFrequency}" 
+                                               Width="100">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#707070"/>
+                                        <Setter Property="FontSize" Value="11"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            
+                            <DataGridTextColumn Header="MONTHLY COST" 
+                                               Binding="{Binding MonthlyCost, StringFormat='₽{0:N0}'}" 
+                                               Width="140">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#FF5252"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            
+                            <DataGridTemplateColumn Header="STATUS" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{Binding StatusColor}" 
+                                               CornerRadius="4" 
+                                               Padding="8,4"
+                                               HorizontalAlignment="Center">
+                                            <TextBlock Text="{Binding StatusDisplay}" 
+                                                      FontSize="10" 
+                                                      FontWeight="Bold" 
+                                                      Foreground="Black"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                            <DataGridTemplateColumn Header="ACTIONS" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Content="✏️" 
+                                                   Command="{Binding DataContext.EditTeamMemberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                   CommandParameter="{Binding Id}"
+                                                   Background="Transparent"
+                                                   Foreground="#AAAAAA"
+                                                   BorderThickness="0"
+                                                   FontSize="13"
+                                                   Padding="6"
+                                                   Cursor="Hand"
+                                                   ToolTip="Edit Member"/>
+                                            <Button Content="🗑️" 
+                                                   Command="{Binding DataContext.DeleteTeamMemberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                   CommandParameter="{Binding Id}"
+                                                   Background="Transparent"
+                                                   Foreground="#D50000"
+                                                   BorderThickness="0"
+                                                   FontSize="13"
+                                                   Padding="6"
+                                                   Cursor="Hand"
+                                                   ToolTip="Delete Member"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                    <!-- EMPTY STATE -->
+                    <TextBlock Text="No team members yet. Click ➕ Add Member to build your team."
+                              FontSize="13"
+                              Foreground="#505050"
+                              HorizontalAlignment="Center"
+                              Margin="0,30,0,0"
+                              Visibility="{Binding TeamMembers.Count, Converter={StaticResource ZeroToVisibleConverter}}"/>
+                    
                 </StackPanel>
             </Border>
 

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" msdata:Ordinal="5" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- NAVIGATION -->
+  <data name="Nav_Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Nav_Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="Nav_Wallet" xml:space="preserve">
+    <value>Wallet</value>
+  </data>
+  <data name="Nav_Analytics" xml:space="preserve">
+    <value>Analytics</value>
+  </data>
+  <data name="Nav_Liquidity" xml:space="preserve">
+    <value>Liquidity</value>
+  </data>
+  <data name="Nav_NeuralCFO" xml:space="preserve">
+    <value>Neural CFO</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  
+  <!-- DASHBOARD -->
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Dashboard_NetWorth" xml:space="preserve">
+    <value>Net Worth</value>
+  </data>
+  <data name="Dashboard_MonthlyIncome" xml:space="preserve">
+    <value>Monthly Income</value>
+  </data>
+  <data name="Dashboard_MonthlyExpense" xml:space="preserve">
+    <value>Monthly Expense</value>
+  </data>
+  <data name="Dashboard_SavingsRate" xml:space="preserve">
+    <value>Savings Rate</value>
+  </data>
+  <data name="Dashboard_RecentTransactions" xml:space="preserve">
+    <value>Recent Transactions</value>
+  </data>
+  <data name="Dashboard_TopExpenses" xml:space="preserve">
+    <value>Top Expense Categories</value>
+  </data>
+  <data name="Dashboard_VsLastMonth" xml:space="preserve">
+    <value>vs Last Month</value>
+  </data>
+  
+  <!-- TRANSACTION -->
+  <data name="Transaction_Title" xml:space="preserve">
+    <value>Transaction Entry</value>
+  </data>
+  <data name="Transaction_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Transaction_Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="Transaction_Expense" xml:space="preserve">
+    <value>Expense</value>
+  </data>
+  <data name="Transaction_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Transaction_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Transaction_Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Transaction_Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Transaction_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Transaction_Tags" xml:space="preserve">
+    <value>Tags (Optional)</value>
+  </data>
+  <data name="Transaction_Recurring" xml:space="preserve">
+    <value>Recurring Transaction</value>
+  </data>
+  <data name="Transaction_Cleared" xml:space="preserve">
+    <value>Cleared (Posted)</value>
+  </data>
+  
+  <!-- BUTTONS -->
+  <data name="Btn_AddTransaction" xml:space="preserve">
+    <value>Add Transaction</value>
+  </data>
+  <data name="Btn_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Btn_SaveNew" xml:space="preserve">
+    <value>Save &amp; New</value>
+  </data>
+  <data name="Btn_Execute" xml:space="preserve">
+    <value>EXECUTE</value>
+  </data>
+  <data name="Btn_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Btn_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Btn_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Btn_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Btn_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  
+  <!-- PROJECTS -->
+  <data name="Projects_Title" xml:space="preserve">
+    <value>Project Analytics</value>
+  </data>
+  <data name="Projects_TotalRevenue" xml:space="preserve">
+    <value>Total Revenue</value>
+  </data>
+  <data name="Projects_TotalCost" xml:space="preserve">
+    <value>Total Cost</value>
+  </data>
+  <data name="Projects_NetProfit" xml:space="preserve">
+    <value>Net Profit</value>
+  </data>
+  <data name="Projects_ProfitMargin" xml:space="preserve">
+    <value>Profit Margin</value>
+  </data>
+  <data name="Projects_TeamPayroll" xml:space="preserve">
+    <value>Team &amp; Payroll</value>
+  </data>
+  <data name="Projects_TotalMonthlyPayroll" xml:space="preserve">
+    <value>Total Monthly Payroll</value>
+  </data>
+  <data name="Projects_AddMember" xml:space="preserve">
+    <value>Add Member</value>
+  </data>
+  
+  <!-- WALLET -->
+  <data name="Wallet_Title" xml:space="preserve">
+    <value>Wallet &amp; Investments</value>
+  </data>
+  <data name="Wallet_TotalBalance" xml:space="preserve">
+    <value>Total Balance</value>
+  </data>
+  <data name="Wallet_Accounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="Wallet_Investments" xml:space="preserve">
+    <value>Investments</value>
+  </data>
+  <data name="Wallet_AddAccount" xml:space="preserve">
+    <value>Add Account</value>
+  </data>
+  <data name="Wallet_AddInvestment" xml:space="preserve">
+    <value>Add Investment</value>
+  </data>
+  
+  <!-- ANALYTICS -->
+  <data name="Analytics_Title" xml:space="preserve">
+    <value>Advanced Analytics</value>
+  </data>
+  <data name="Analytics_SankeyTitle" xml:space="preserve">
+    <value>Cash Flow Analysis (Sankey Diagram)</value>
+  </data>
+  <data name="Analytics_CorrelationTitle" xml:space="preserve">
+    <value>Asset Correlation Matrix</value>
+  </data>
+  
+  <!-- LIQUIDITY -->
+  <data name="Liquidity_Title" xml:space="preserve">
+    <value>Liquidity Manager</value>
+  </data>
+  <data name="Liquidity_CurrentCash" xml:space="preserve">
+    <value>Current Cash</value>
+  </data>
+  <data name="Liquidity_PendingReceivables" xml:space="preserve">
+    <value>Pending Receivables</value>
+  </data>
+  <data name="Liquidity_PendingPayables" xml:space="preserve">
+    <value>Pending Payables</value>
+  </data>
+  <data name="Liquidity_ProjectedBalance" xml:space="preserve">
+    <value>Projected Balance</value>
+  </data>
+  <data name="Liquidity_Obligations" xml:space="preserve">
+    <value>OBLIGATIONS (I Owe)</value>
+  </data>
+  <data name="Liquidity_Receivables" xml:space="preserve">
+    <value>RECEIVABLES (Owed to Me)</value>
+  </data>
+  
+  <!-- SETTINGS -->
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_ApiKey" xml:space="preserve">
+    <value>Google Gemini API Key</value>
+  </data>
+  <data name="Settings_SaveApiKey" xml:space="preserve">
+    <value>Save API Key</value>
+  </data>
+  
+  <!-- COMMON -->
+  <data name="Common_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Common_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Common_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Common_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Common_Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Common_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Common_Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+</root>

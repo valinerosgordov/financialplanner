@@ -66,6 +66,14 @@ artifacts/
 *.g.i.cs
 *_wpftmp.csproj
 
+# Application data
+data.json
+
+# Sensitive data
+*.config
+!App.config
+!Web.config
+
 # macOS
 .DS_Store
 .AppleDouble

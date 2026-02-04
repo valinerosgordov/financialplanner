@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NexusFinance.Services;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace NexusFinance.ViewModels;
@@ -8,151 +9,92 @@ namespace NexusFinance.ViewModels;
 public partial class SettingsViewModel : ObservableObject
 {
     private readonly SecureStorageService _secureStorage;
+    private readonly LocalizationService _localization;
 
     [ObservableProperty]
-    private string _apiKey = string.Empty;
-
-    [ObservableProperty]
-    private bool _hasApiKey;
+    private string? _apiKey;
 
     [ObservableProperty]
     private string _statusMessage = string.Empty;
 
     [ObservableProperty]
-    private string _statusColor = "#B0B0B0";
+    private ObservableCollection<LanguageOption> _availableLanguages;
+
+    [ObservableProperty]
+    private LanguageOption? _selectedLanguage;
 
     public SettingsViewModel()
     {
         _secureStorage = new SecureStorageService();
-        CheckApiKeyStatus();
+        _localization = LocalizationService.Instance;
+
+        // Load saved API key (if exists)
+        _apiKey = _secureStorage.LoadApiKey();
+
+        // Initialize language options
+        _availableLanguages = new ObservableCollection<LanguageOption>
+        {
+            new LanguageOption { Code = "en-US", DisplayName = "🇺🇸 English" },
+            new LanguageOption { Code = "ru-RU", DisplayName = "🇷🇺 Русский" }
+        };
+
+        // Set current language selection
+        var currentCode = _localization.CurrentCulture.Name;
+        _selectedLanguage = _availableLanguages.FirstOrDefault(l => l.Code == currentCode) 
+                            ?? _availableLanguages[0];
     }
 
     [RelayCommand]
     private void SaveApiKey()
     {
+        if (string.IsNullOrWhiteSpace(ApiKey))
+        {
+            StatusMessage = "⚠️ API Key cannot be empty";
+            return;
+        }
+
         try
         {
-            if (string.IsNullOrWhiteSpace(ApiKey))
-            {
-                StatusMessage = "⚠️ Please enter an API key";
-                StatusColor = "#FF1744";
-                return;
-            }
-
-            // Basic validation (Gemini keys start with "AIza")
-            if (!ApiKey.StartsWith("AIza"))
-            {
-                StatusMessage = "⚠️ Invalid Gemini API key format. Keys should start with 'AIza'";
-                StatusColor = "#FF1744";
-                return;
-            }
-
             _secureStorage.SaveApiKey(ApiKey);
-            HasApiKey = true;
-            StatusMessage = "✅ API Key saved securely!";
-            StatusColor = "#00E676";
-
-            // Clear the input for security
-            ApiKey = string.Empty;
+            StatusMessage = "✅ API Key saved securely";
         }
         catch (Exception ex)
         {
             StatusMessage = $"❌ Error: {ex.Message}";
-            StatusColor = "#FF1744";
-        }
-    }
-
-    [RelayCommand]
-    private void DeleteApiKey()
-    {
-        var result = MessageBox.Show(
-            "Are you sure you want to delete the stored API key?",
-            "Confirm Deletion",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Warning
-        );
-
-        if (result == MessageBoxResult.Yes)
-        {
-            try
-            {
-                _secureStorage.DeleteApiKey();
-                HasApiKey = false;
-                ApiKey = string.Empty;
-                StatusMessage = "🗑️ API Key deleted";
-                StatusColor = "#B0B0B0";
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = $"❌ Error: {ex.Message}";
-                StatusColor = "#FF1744";
-            }
         }
     }
 
     [RelayCommand]
     private void TestConnection()
     {
-        if (!HasApiKey)
-        {
-            StatusMessage = "⚠️ No API key configured";
-            StatusColor = "#FF1744";
+        StatusMessage = "🔄 Testing connection... (Feature in development)";
+    }
+
+    partial void OnSelectedLanguageChanged(LanguageOption? value)
+    {
+        if (value == null || value.Code == _localization.CurrentCulture.Name)
             return;
-        }
 
         try
         {
-            var aiService = new GeminiAnalysisService(_secureStorage);
+            _localization.SetLanguage(value.Code);
             
-            if (aiService.IsConfigured)
-            {
-                StatusMessage = "✅ Configuration valid. AI service ready!";
-                StatusColor = "#00E676";
-            }
-            else
-            {
-                StatusMessage = "⚠️ API key not found or invalid";
-                StatusColor = "#FF1744";
-            }
+            // Show confirmation message
+            var message = value.Code == "ru-RU"
+                ? "✅ Язык изменён на Русский. Интерфейс обновлён!"
+                : "✅ Language changed to English. UI refreshed!";
+            
+            MessageBox.Show(message, "Language Changed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex)
         {
-            StatusMessage = $"❌ Test failed: {ex.Message}";
-            StatusColor = "#FF1744";
+            StatusMessage = $"❌ Error changing language: {ex.Message}";
         }
     }
+}
 
-    [RelayCommand]
-    private void OpenApiKeyLink()
-    {
-        try
-        {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-            {
-                FileName = "https://ai.google.dev/",
-                UseShellExecute = true
-            });
-        }
-        catch
-        {
-            StatusMessage = "⚠️ Could not open browser";
-            StatusColor = "#FF1744";
-        }
-    }
-
-    private void CheckApiKeyStatus()
-    {
-        HasApiKey = _secureStorage.HasApiKey();
-        
-        if (HasApiKey)
-        {
-            StatusMessage = "✅ API Key is configured";
-            StatusColor = "#00E676";
-        }
-        else
-        {
-            StatusMessage = "⚠️ No API key configured. Get one at ai.google.dev";
-            StatusColor = "#FFA500";
-        }
-    }
+public class LanguageOption
+{
+    public string Code { get; set; } = string.Empty;
+    public string DisplayName { get; set; } = string.Empty;
 }

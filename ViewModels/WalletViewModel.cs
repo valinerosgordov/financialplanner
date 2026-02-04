@@ -1,10 +1,15 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Windows;
+using NexusFinance.Services;
 
 namespace NexusFinance.ViewModels;
 
 public partial class WalletViewModel : ObservableObject
 {
+    private readonly DataService _dataService;
+
     [ObservableProperty]
     private ObservableCollection<WalletAccount> _accounts = new();
 
@@ -22,33 +27,167 @@ public partial class WalletViewModel : ObservableObject
 
     public WalletViewModel()
     {
+        _dataService = new DataService();
         LoadWalletData();
+    }
+
+    [RelayCommand]
+    public void Refresh()
+    {
+        LoadWalletData();
+    }
+
+    [RelayCommand]
+    private void AddAccount()
+    {
+        var dialog = new Views.AccountEditorDialog();
+        if (dialog.ShowDialog() == true && dialog.Result != null)
+        {
+            _dataService.AddAccount(dialog.Result);
+            LoadWalletData();
+            MessageBox.Show($"Account '{dialog.Result.Name}' added successfully!", "Success", 
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+
+    [RelayCommand]
+    private void EditAccount(string? accountName)
+    {
+        if (string.IsNullOrWhiteSpace(accountName))
+            return;
+
+        var accounts = _dataService.GetAccounts();
+        var account = accounts.FirstOrDefault(a => a.Name == accountName);
+        if (account == null)
+            return;
+
+        var dialog = new Views.AccountEditorDialog(account);
+        if (dialog.ShowDialog() == true && dialog.Result != null)
+        {
+            _dataService.UpdateAccount(accountName, dialog.Result);
+            LoadWalletData();
+            MessageBox.Show($"Account '{dialog.Result.Name}' updated successfully!", "Success", 
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+
+    [RelayCommand]
+    private void DeleteAccount(string? accountName)
+    {
+        if (string.IsNullOrWhiteSpace(accountName))
+            return;
+
+        var result = MessageBox.Show(
+            $"Are you sure you want to delete account '{accountName}'?\nThis action cannot be undone.",
+            "Confirm Delete",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
+
+        if (result == MessageBoxResult.Yes)
+        {
+            _dataService.DeleteAccount(accountName);
+            LoadWalletData();
+            MessageBox.Show($"Account '{accountName}' deleted successfully!", "Success", 
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+
+    [RelayCommand]
+    private void AddInvestment()
+    {
+        var dialog = new Views.InvestmentEditorDialog();
+        if (dialog.ShowDialog() == true && dialog.Result != null)
+        {
+            _dataService.AddInvestment(dialog.Result);
+            LoadWalletData();
+            MessageBox.Show($"Investment '{dialog.Result.Name}' added successfully!", "Success", 
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+
+    [RelayCommand]
+    private void EditInvestment(string? investmentName)
+    {
+        if (string.IsNullOrWhiteSpace(investmentName))
+            return;
+
+        var investments = _dataService.GetInvestments();
+        var investment = investments.FirstOrDefault(i => i.Name == investmentName);
+        if (investment == null)
+            return;
+
+        var dialog = new Views.InvestmentEditorDialog(investment);
+        if (dialog.ShowDialog() == true && dialog.Result != null)
+        {
+            _dataService.UpdateInvestment(investmentName, dialog.Result);
+            LoadWalletData();
+            MessageBox.Show($"Investment '{dialog.Result.Name}' updated successfully!", "Success", 
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+
+    [RelayCommand]
+    private void DeleteInvestment(string? investmentName)
+    {
+        if (string.IsNullOrWhiteSpace(investmentName))
+            return;
+
+        var result = MessageBox.Show(
+            $"Are you sure you want to delete investment '{investmentName}'?\nThis action cannot be undone.",
+            "Confirm Delete",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
+
+        if (result == MessageBoxResult.Yes)
+        {
+            _dataService.DeleteInvestment(investmentName);
+            LoadWalletData();
+            MessageBox.Show($"Investment '{investmentName}' deleted successfully!", "Success", 
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 
     private void LoadWalletData()
     {
-        // Load accounts
-        Accounts = new ObservableCollection<WalletAccount>
-        {
-            new("💳 Checking Account", 450000, "Sberbank", "#00E676"),
-            new("💰 Savings", 1200000, "Tinkoff", "#8A2BE2"),
-            new("🏦 Business Account", 650000, "Alfa Bank", "#00BCD4"),
-            new("💵 Cash", 150000, "Physical", "#FFA500"),
-        };
+        var accountsList = _dataService.GetAccounts();
+        var investmentsList = _dataService.GetInvestments();
 
-        TotalBalance = Accounts.Sum(a => a.Balance);
+        // Load accounts
+        Accounts = new ObservableCollection<WalletAccount>(
+            accountsList.Select(a => new WalletAccount(
+                a.Name,
+                a.Balance,
+                a.Institution,
+                GetAccountColor(a.Type)
+            ))
+        );
+
+        TotalBalance = accountsList.Sum(a => a.Balance);
 
         // Load investments
-        Investments = new ObservableCollection<InvestmentItem>
-        {
-            new("₿ Bitcoin", 850000, 920000, 8.2m, "#F7931A"),
-            new("📈 Stocks Portfolio", 650000, 720000, 10.8m, "#00E676"),
-            new("🏠 Real Estate Fund", 1200000, 1450000, 20.8m, "#8A2BE2"),
-            new("💎 Gold", 450000, 480000, 6.7m, "#FFD700"),
-        };
+        Investments = new ObservableCollection<InvestmentItem>(
+            investmentsList.Select(i => new InvestmentItem(
+                i.Name,
+                i.Amount,
+                i.CurrentValue,
+                i.ReturnPercent,
+                i.ReturnPercent >= 0 ? "#00C853" : "#D50000"
+            ))
+        );
 
-        TotalInvested = Investments.Sum(i => i.Invested);
-        TotalReturn = Investments.Sum(i => i.CurrentValue) - TotalInvested;
+        TotalInvested = investmentsList.Sum(i => i.Amount);
+        TotalReturn = investmentsList.Sum(i => i.CurrentValue) - TotalInvested;
+    }
+
+    private static string GetAccountColor(string type)
+    {
+        return type switch
+        {
+            "Checking" => "#C0C0C0",
+            "Savings" => "#909090",
+            "Cash" => "#A0A0A0",
+            _ => "#808080"
+        };
     }
 }
 

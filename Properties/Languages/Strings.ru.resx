@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" msdata:Ordinal="5" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- NAVIGATION -->
+  <data name="Nav_Dashboard" xml:space="preserve">
+    <value>Дашборд</value>
+  </data>
+  <data name="Nav_Projects" xml:space="preserve">
+    <value>Проекты</value>
+  </data>
+  <data name="Nav_Wallet" xml:space="preserve">
+    <value>Кошелёк</value>
+  </data>
+  <data name="Nav_Analytics" xml:space="preserve">
+    <value>Аналитика</value>
+  </data>
+  <data name="Nav_Liquidity" xml:space="preserve">
+    <value>Ликвидность</value>
+  </data>
+  <data name="Nav_NeuralCFO" xml:space="preserve">
+    <value>Нейро CFO</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  
+  <!-- DASHBOARD -->
+  <data name="Dashboard_Title" xml:space="preserve">
+    <value>Дашборд</value>
+  </data>
+  <data name="Dashboard_NetWorth" xml:space="preserve">
+    <value>Чистый Капитал</value>
+  </data>
+  <data name="Dashboard_MonthlyIncome" xml:space="preserve">
+    <value>Месячный Доход</value>
+  </data>
+  <data name="Dashboard_MonthlyExpense" xml:space="preserve">
+    <value>Месячный Расход</value>
+  </data>
+  <data name="Dashboard_SavingsRate" xml:space="preserve">
+    <value>Норма Сбережений</value>
+  </data>
+  <data name="Dashboard_RecentTransactions" xml:space="preserve">
+    <value>Недавние Транзакции</value>
+  </data>
+  <data name="Dashboard_TopExpenses" xml:space="preserve">
+    <value>Главные Категории Расходов</value>
+  </data>
+  <data name="Dashboard_VsLastMonth" xml:space="preserve">
+    <value>vs Прошлый Месяц</value>
+  </data>
+  
+  <!-- TRANSACTION -->
+  <data name="Transaction_Title" xml:space="preserve">
+    <value>Ввод Транзакции</value>
+  </data>
+  <data name="Transaction_Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="Transaction_Income" xml:space="preserve">
+    <value>Доход</value>
+  </data>
+  <data name="Transaction_Expense" xml:space="preserve">
+    <value>Расход</value>
+  </data>
+  <data name="Transaction_Amount" xml:space="preserve">
+    <value>Сумма</value>
+  </data>
+  <data name="Transaction_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="Transaction_Project" xml:space="preserve">
+    <value>Проект</value>
+  </data>
+  <data name="Transaction_Category" xml:space="preserve">
+    <value>Категория</value>
+  </data>
+  <data name="Transaction_Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="Transaction_Tags" xml:space="preserve">
+    <value>Теги (Опционально)</value>
+  </data>
+  <data name="Transaction_Recurring" xml:space="preserve">
+    <value>Повторяющаяся Транзакция</value>
+  </data>
+  <data name="Transaction_Cleared" xml:space="preserve">
+    <value>Проведено (Подтверждено)</value>
+  </data>
+  
+  <!-- BUTTONS -->
+  <data name="Btn_AddTransaction" xml:space="preserve">
+    <value>Добавить Транзакцию</value>
+  </data>
+  <data name="Btn_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="Btn_SaveNew" xml:space="preserve">
+    <value>Сохранить и Новая</value>
+  </data>
+  <data name="Btn_Execute" xml:space="preserve">
+    <value>ВЫПОЛНИТЬ</value>
+  </data>
+  <data name="Btn_Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="Btn_Edit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="Btn_Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Btn_Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="Btn_Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  
+  <!-- PROJECTS -->
+  <data name="Projects_Title" xml:space="preserve">
+    <value>Аналитика Проектов</value>
+  </data>
+  <data name="Projects_TotalRevenue" xml:space="preserve">
+    <value>Общий Доход</value>
+  </data>
+  <data name="Projects_TotalCost" xml:space="preserve">
+    <value>Общие Затраты</value>
+  </data>
+  <data name="Projects_NetProfit" xml:space="preserve">
+    <value>Чистая Прибыль</value>
+  </data>
+  <data name="Projects_ProfitMargin" xml:space="preserve">
+    <value>Маржа Прибыли</value>
+  </data>
+  <data name="Projects_TeamPayroll" xml:space="preserve">
+    <value>Команда и Зарплаты</value>
+  </data>
+  <data name="Projects_TotalMonthlyPayroll" xml:space="preserve">
+    <value>Общий Месячный Фонд Оплаты Труда</value>
+  </data>
+  <data name="Projects_AddMember" xml:space="preserve">
+    <value>Добавить Сотрудника</value>
+  </data>
+  
+  <!-- WALLET -->
+  <data name="Wallet_Title" xml:space="preserve">
+    <value>Кошелёк и Инвестиции</value>
+  </data>
+  <data name="Wallet_TotalBalance" xml:space="preserve">
+    <value>Общий Баланс</value>
+  </data>
+  <data name="Wallet_Accounts" xml:space="preserve">
+    <value>Счета</value>
+  </data>
+  <data name="Wallet_Investments" xml:space="preserve">
+    <value>Инвестиции</value>
+  </data>
+  <data name="Wallet_AddAccount" xml:space="preserve">
+    <value>Добавить Счёт</value>
+  </data>
+  <data name="Wallet_AddInvestment" xml:space="preserve">
+    <value>Добавить Инвестицию</value>
+  </data>
+  
+  <!-- ANALYTICS -->
+  <data name="Analytics_Title" xml:space="preserve">
+    <value>Расширенная Аналитика</value>
+  </data>
+  <data name="Analytics_SankeyTitle" xml:space="preserve">
+    <value>Анализ Денежных Потоков (Диаграмма Санки)</value>
+  </data>
+  <data name="Analytics_CorrelationTitle" xml:space="preserve">
+    <value>Матрица Корреляции Активов</value>
+  </data>
+  
+  <!-- LIQUIDITY -->
+  <data name="Liquidity_Title" xml:space="preserve">
+    <value>Менеджер Ликвидности</value>
+  </data>
+  <data name="Liquidity_CurrentCash" xml:space="preserve">
+    <value>Текущие Деньги</value>
+  </data>
+  <data name="Liquidity_PendingReceivables" xml:space="preserve">
+    <value>Ожидаемые Поступления</value>
+  </data>
+  <data name="Liquidity_PendingPayables" xml:space="preserve">
+    <value>Ожидаемые Платежи</value>
+  </data>
+  <data name="Liquidity_ProjectedBalance" xml:space="preserve">
+    <value>Прогнозируемый Баланс</value>
+  </data>
+  <data name="Liquidity_Obligations" xml:space="preserve">
+    <value>ОБЯЗАТЕЛЬСТВА (Я Должен)</value>
+  </data>
+  <data name="Liquidity_Receivables" xml:space="preserve">
+    <value>ДЕБИТОРСКАЯ ЗАДОЛЖЕННОСТЬ (Мне Должны)</value>
+  </data>
+  
+  <!-- SETTINGS -->
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="Settings_ApiKey" xml:space="preserve">
+    <value>Google Gemini API Ключ</value>
+  </data>
+  <data name="Settings_SaveApiKey" xml:space="preserve">
+    <value>Сохранить API Ключ</value>
+  </data>
+  
+  <!-- COMMON -->
+  <data name="Common_Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Common_Amount" xml:space="preserve">
+    <value>Сумма</value>
+  </data>
+  <data name="Common_Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="Common_Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Common_Actions" xml:space="preserve">
+    <value>Действия</value>
+  </data>
+  <data name="Common_Active" xml:space="preserve">
+    <value>Активный</value>
+  </data>
+  <data name="Common_Inactive" xml:space="preserve">
+    <value>Неактивный</value>
+  </data>
+</root>

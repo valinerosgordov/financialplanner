@@ -41,9 +41,22 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void ShowTransactionInput()
     {
-        var dialog = new TransactionInputViewModel();
-        // In real app, show as dialog
-        CurrentView = dialog;
+        CurrentView = new TransactionInputViewModel();
+        ActiveView = "Transaction";
+    }
+
+    [RelayCommand]
+    private void NavigateToAnalytics()
+    {
+        CurrentView = new AnalyticsViewModel(new Services.DataService());
+        ActiveView = "Analytics";
+    }
+
+    [RelayCommand]
+    private void NavigateToLiquidity()
+    {
+        CurrentView = new LiquidityViewModel(new Services.DataService());
+        ActiveView = "Liquidity";
     }
 
     [RelayCommand]
