@@ -7,6 +7,23 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>NexusFinance</RootNamespace>
     <UseWPF>true</UseWPF>
+    
+    <!-- Application Metadata -->
+    <AssemblyName>NexusFinance</AssemblyName>
+    <Product>Nexus Finance - Financial Planner</Product>
+    <Company>NexusFinance</Company>
+    <Copyright>Copyright © 2026</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.0</Version>
+    
+    <!-- Application Icon -->
+    <!-- <ApplicationIcon>app.ico</ApplicationIcon> -->
+    
+    <!-- Publish Settings (RuntimeIdentifier set via publish command) -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
