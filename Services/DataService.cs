@@ -21,6 +21,8 @@ public sealed class DataService : IDataService
     private AppData _data;
     private readonly object _dataLock = new(); // Thread safety for file I/O
 
+    public event EventHandler? DataCleared;
+
     public DataService()
     {
         _exceptionHandler = GlobalExceptionHandler.Instance;
@@ -539,6 +541,8 @@ public sealed class DataService : IDataService
             _data = CreateEmptyData();
             SaveData();
         }
+        
+        DataCleared?.Invoke(this, EventArgs.Empty);
     }
 
     private AppData LoadData()

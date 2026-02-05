@@ -174,7 +174,8 @@ public partial class SettingsViewModel : ObservableObject
                 "• All investments\n" +
                 "• All payables and receivables\n" +
                 "• All team members\n\n" +
-                "This action cannot be undone!",
+                "This action cannot be undone!\n\n" +
+                "The application will close after clearing data.",
                 "Clear All Data",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning,
@@ -185,14 +186,15 @@ public partial class SettingsViewModel : ObservableObject
             {
                 _dataService.ClearAllData();
                 
-                StatusMessage = "✅ All data cleared. Restart the app to see changes.";
-                
                 MessageBox.Show(
-                    "All data has been cleared successfully.\n\nPlease restart the application to refresh all views.",
+                    "All data has been cleared successfully.\n\nThe application will now close.\n\nPlease restart to see the empty state.",
                     "Data Cleared",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information
                 );
+                
+                // Close the application
+                Application.Current.Shutdown();
             }
         }
         catch (Exception ex)

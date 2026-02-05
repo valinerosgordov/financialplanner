@@ -10,6 +10,7 @@ namespace NexusFinance.Services;
 /// </summary>
 public interface IDataService
 {
+    event EventHandler? DataCleared;
     // Projects
     ObservableCollection<Project> GetProjects();
     void AddProject(Project project);
