@@ -133,35 +133,24 @@
                                             Padding="12,8"
                                             HorizontalContentAlignment="Center"
                                             IsChecked="{Binding IsIncome}">
-                                    <RadioButton.Style>
-                                        <Style TargetType="RadioButton">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="RadioButton">
-                                                        <Border Background="Transparent" 
-                                                               CornerRadius="6"
-                                                               Padding="{TemplateBinding Padding}">
-                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                            <Border.Style>
-                                                                <Style TargetType="Border">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                                                            <Setter Property="Background" Value="#C0C0C0"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Border.Style>
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
+                                    <RadioButton.Template>
+                                        <ControlTemplate TargetType="RadioButton">
+                                            <Border x:Name="border"
+                                                   Background="Transparent" 
+                                                   CornerRadius="6"
+                                                   Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                                VerticalAlignment="Center"
+                                                                TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
                                                 <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#C0C0C0"/>
                                                     <Setter Property="Foreground" Value="Black"/>
                                                 </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </RadioButton.Style>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </RadioButton.Template>
                                 </RadioButton>
                                 
                                 <RadioButton Grid.Column="1"
@@ -173,35 +162,24 @@
                                             FontWeight="SemiBold"
                                             Padding="12,8"
                                             HorizontalContentAlignment="Center">
-                                    <RadioButton.Style>
-                                        <Style TargetType="RadioButton">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="RadioButton">
-                                                        <Border Background="Transparent" 
-                                                               CornerRadius="6"
-                                                               Padding="{TemplateBinding Padding}">
-                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                            <Border.Style>
-                                                                <Style TargetType="Border">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                                                            <Setter Property="Background" Value="#C0C0C0"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Border.Style>
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
+                                    <RadioButton.Template>
+                                        <ControlTemplate TargetType="RadioButton">
+                                            <Border x:Name="border"
+                                                   Background="Transparent" 
+                                                   CornerRadius="6"
+                                                   Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                                VerticalAlignment="Center"
+                                                                TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
                                                 <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#C0C0C0"/>
                                                     <Setter Property="Foreground" Value="Black"/>
                                                 </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </RadioButton.Style>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </RadioButton.Template>
                                 </RadioButton>
                             </Grid>
                         </Border>
@@ -347,23 +325,7 @@
                            BorderThickness="0"
                            FontSize="12"
                            Padding="15,10"
-                           Cursor="Hand">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="Transparent" 
-                                       Padding="{TemplateBinding Padding}">
-                                    <ContentPresenter HorizontalAlignment="Center" 
-                                                    VerticalAlignment="Center"
-                                                    TextBlock.Foreground="{TemplateBinding Foreground}"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Foreground" Value="#C0C0C0"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                           Cursor="Hand"/>
                     
                     <!-- SAVE & NEW (Outline) -->
                     <Button Grid.Column="2"

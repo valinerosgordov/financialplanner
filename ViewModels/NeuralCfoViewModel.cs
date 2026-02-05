@@ -13,6 +13,7 @@ public partial class NeuralCfoViewModel : ObservableObject
 {
     private readonly IAiService _aiService;
     private readonly SecureStorageService _secureStorage;
+    private readonly IDataService _dataService;
 
     [ObservableProperty]
     private string _userQuestion = string.Empty;
@@ -30,14 +31,15 @@ public partial class NeuralCfoViewModel : ObservableObject
     private string _statusMessage = string.Empty;
 
     public NeuralCfoViewModel() 
-        : this(ServiceContainer.Instance.AiService, ServiceContainer.Instance.SecureStorageService)
+        : this(ServiceContainer.Instance.AiService, ServiceContainer.Instance.SecureStorageService, ServiceContainer.Instance.DataService)
     {
     }
 
-    public NeuralCfoViewModel(IAiService aiService, SecureStorageService secureStorage)
+    public NeuralCfoViewModel(IAiService aiService, SecureStorageService secureStorage, IDataService dataService)
     {
         _aiService = aiService ?? throw new ArgumentNullException(nameof(aiService));
         _secureStorage = secureStorage ?? throw new ArgumentNullException(nameof(secureStorage));
+        _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
         
         try
         {
@@ -95,11 +97,14 @@ public partial class NeuralCfoViewModel : ObservableObject
 
         try
         {
-            // Build financial context (demo data)
+            // Calculate real financial metrics
+            var (netWorth, monthlyIncome, monthlyExpense) = CalculateFinancialMetrics();
+            
+            // Build financial context from real data
             var context = FinancialContextBuilder.BuildSimpleContext(
-                netWorth: 2_450_000,
-                monthlyIncome: 125_000,
-                monthlyExpense: 55_000
+                netWorth: netWorth,
+                monthlyIncome: monthlyIncome,
+                monthlyExpense: monthlyExpense
             );
 
             // Get AI analysis
@@ -149,6 +154,32 @@ public partial class NeuralCfoViewModel : ObservableObject
         {
             StatusMessage = "⚠️ Not configured - Go to Settings";
         }
+    }
+    
+    private (decimal netWorth, decimal monthlyIncome, decimal monthlyExpense) CalculateFinancialMetrics()
+    {
+        var accounts = _dataService.GetAccounts();
+        var transactions = _dataService.GetTransactions().ToList();
+        var investments = _dataService.GetInvestments();
+        
+        // Calculate net worth (accounts + investments)
+        var totalAccounts = accounts.Sum(a => a.Balance);
+        var totalInvestments = investments.Sum(i => i.CurrentValue);
+        var netWorth = totalAccounts + totalInvestments;
+        
+        // Calculate monthly income and expense (last 30 days)
+        var thirtyDaysAgo = DateTime.Now.AddDays(-30);
+        var recentTransactions = transactions.Where(t => t.Date >= thirtyDaysAgo).ToList();
+        
+        var monthlyIncome = recentTransactions
+            .Where(t => t.Amount > 0)
+            .Sum(t => t.Amount);
+            
+        var monthlyExpense = Math.Abs(recentTransactions
+            .Where(t => t.Amount < 0)
+            .Sum(t => t.Amount));
+        
+        return (netWorth, monthlyIncome, monthlyExpense);
     }
 }
 

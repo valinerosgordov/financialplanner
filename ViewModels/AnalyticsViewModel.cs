@@ -99,10 +99,12 @@ public partial class AnalyticsViewModel : ObservableObject
             .Select(p => p.Name)
             .Take(3));
         
-        // Add market indices (synthetic for demo)
-        if (assetList.Count < 3)
+        // No mock data - if no assets, show empty state
+        if (assetList.Count < 2)
         {
-            assetList.AddRange(new[] { "BTC", "ETH", "S&P 500" });
+            AssetNames = new ObservableCollection<string>();
+            CorrelationMatrix = new ObservableCollection<CorrelationCell>();
+            return;
         }
         
         AssetNames = new ObservableCollection<string>(assetList.Distinct());

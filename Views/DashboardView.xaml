@@ -127,7 +127,6 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="60"/>
                         </Grid.RowDefinitions>
                         
                         <TextBlock Grid.Row="0" 
@@ -139,18 +138,6 @@
                                   Style="{StaticResource KpiValueStyle}"
                                   Foreground="#00C853"
                                   VerticalAlignment="Center"/>
-                        
-                        <Border Grid.Row="2" 
-                               Background="#0C00C853" 
-                               CornerRadius="4" 
-                               Margin="0,10,0,0">
-                            <TextBlock Text="📈 +12.3%" 
-                                      FontSize="12" 
-                                      Foreground="#00C853" 
-                                      FontWeight="Bold"
-                                      HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center"/>
-                        </Border>
                     </Grid>
                 </Border>
                 
@@ -160,7 +147,6 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="60"/>
                         </Grid.RowDefinitions>
                         
                         <TextBlock Grid.Row="0" 
@@ -172,18 +158,6 @@
                                   Style="{StaticResource KpiValueStyle}"
                                   Foreground="#D50000"
                                   VerticalAlignment="Center"/>
-                        
-                        <Border Grid.Row="2" 
-                               Background="#0CD50000" 
-                               CornerRadius="4" 
-                               Margin="0,10,0,0">
-                            <TextBlock Text="📉 -5.2%" 
-                                      FontSize="12" 
-                                      Foreground="#D50000" 
-                                      FontWeight="Bold"
-                                      HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center"/>
-                        </Border>
                     </Grid>
                 </Border>
                 

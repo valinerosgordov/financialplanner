@@ -133,29 +133,10 @@
 
                 <!-- CANCEL BUTTON -->
                 <Button Grid.Column="1"
-                       Content="❌ Cancel" 
+                       Content="Cancel" 
                        Click="CancelButton_Click"
-                       Background="#CC505050"
-                       Foreground="White"
-                       BorderBrush="#808080"
-                       BorderThickness="1"
-                       Padding="20,12"
-                       FontSize="16"
-                       FontWeight="Bold"
-                       Cursor="Hand"
-                       Margin="10,0,0,0">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" 
-                                   BorderBrush="{TemplateBinding BorderBrush}"
-                                   BorderThickness="{TemplateBinding BorderThickness}"
-                                   CornerRadius="6" 
-                                   Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                       Style="{StaticResource StealthOutlineButton}"
+                       Margin="10,0,0,0"/>
             </Grid>
 
             </StackPanel>

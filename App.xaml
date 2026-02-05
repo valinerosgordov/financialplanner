@@ -285,52 +285,77 @@
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="Cursor" Value="Hand"/>
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Color="#404040" Offset="0"/>
-                            <GradientStop Color="#181818" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="#B0B0B0" ShadowDepth="0" BlurRadius="8" Opacity="0.3"/>
-                    </Setter.Value>
-                </Setter>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" 
+                            <Border x:Name="border"
+                                   CornerRadius="6" 
                                    BorderBrush="{TemplateBinding BorderBrush}"
                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                   CornerRadius="6" 
                                    Padding="{TemplateBinding Padding}">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#404040" Offset="0"/>
+                                        <GradientStop Color="#181818" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
                                 <Border.Effect>
                                     <DropShadowEffect Color="#B0B0B0" ShadowDepth="0" BlurRadius="8" Opacity="0.3"/>
                                 </Border.Effect>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                VerticalAlignment="Center"
+                                                TextElement.Foreground="{TemplateBinding Foreground}"/>
                             </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#505050" Offset="0"/>
+                                                <GradientStop Color="#282828" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="#C0C0C0" ShadowDepth="0" BlurRadius="12" Opacity="0.5"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background">
-                            <Setter.Value>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#505050" Offset="0"/>
-                                    <GradientStop Color="#282828" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Effect">
-                            <Setter.Value>
-                                <DropShadowEffect Color="#C0C0C0" ShadowDepth="0" BlurRadius="12" Opacity="0.5"/>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                </Style.Triggers>
+            </Style>
+            
+            <!-- DANGER BUTTON STYLE (Red) -->
+            <Style x:Key="DangerButton" TargetType="Button">
+                <Setter Property="Background" Value="#FF1744"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="20,12"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                   Background="{TemplateBinding Background}" 
+                                   CornerRadius="6" 
+                                   Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                VerticalAlignment="Center"
+                                                TextElement.Foreground="{TemplateBinding Foreground}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#FF2757"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
             
         </ResourceDictionary>

@@ -70,9 +70,9 @@
                     <!-- ACTION BUTTONS -->
                     <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
@@ -90,28 +90,7 @@
                         <Button Grid.Column="4"
                                Content="Delete" 
                                Command="{Binding DeleteApiKeyCommand}"
-                               Background="#FF1744"
-                               Foreground="White"
-                               BorderThickness="0"
-                               Padding="15,12"
-                               FontSize="14"
-                               FontWeight="SemiBold"
-                               Cursor="Hand">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" 
-                                           CornerRadius="6" 
-                                           Padding="{TemplateBinding Padding}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#FF2757"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                               Style="{StaticResource DangerButton}"/>
                         
                     </Grid>
                     
@@ -185,29 +164,9 @@
                     
                     <Button Content="Clear All Data" 
                             Command="{Binding ClearAllDataCommand}"
-                            Background="#FF1744"
-                            Foreground="White"
-                            BorderThickness="0"
-                            Padding="20,12"
-                            FontSize="14"
-                            FontWeight="SemiBold"
-                            Cursor="Hand"
-                            HorizontalAlignment="Left">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}" 
-                                       CornerRadius="6" 
-                                       Padding="{TemplateBinding Padding}">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#FF2757"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                            Style="{StaticResource DangerButton}"
+                            HorizontalAlignment="Left"
+                            MinWidth="200"/>
                 </StackPanel>
             </Border>
 
